@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="AppEngine API">
+    <CLASSES>
+      <root url="file://D:/GAE/google-cloud-sdk/bin/lib/user" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://D:/GAE/google-cloud-sdk/bin/lib/user" recursive="false" />
+  </library>
+</component>

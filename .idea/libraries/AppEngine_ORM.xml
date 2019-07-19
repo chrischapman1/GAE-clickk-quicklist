@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="AppEngine ORM">
+    <CLASSES>
+      <root url="file://D:/GAE/google-cloud-sdk/bin/lib/user/orm" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://D:/GAE/google-cloud-sdk/bin/lib/user/orm" recursive="false" />
+  </library>
+</component>
