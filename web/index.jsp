@@ -22,6 +22,9 @@
 <html>
 <head>
   <title>Quicklist</title>
+  <link href="//db.onlinewebfonts.com/c/d664bf6951144f64f00f5b48099019d3?family=RefrigeratorDeluxeW01-Bold" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" id="astra-theme-css-css" href="https://www.quickcuts.com.au/wp-content/themes/astra/assets/css/minified/menu-animation.min.css?ver=1.6.8" type="text/css" media="all">
+
 </head>
 <body>
 <style>
@@ -87,7 +90,7 @@
     <td>
       <%= timeSlots[i].getUser().getName()%>
     </td>
-    <td>
+    <td id="phoneemail">
       <%= timeSlots[i].getUser().getPhoneemail()%>
     </td>
     <td>
@@ -146,15 +149,28 @@
     return i;
   }
 
+  function hidephoneemail()
+  {
+
+    var cell = document.getElementById('phoneemail').innerHTML;
+    cell = cell.replace(/(\w{1})(.*)(\w{1})@(.*)/, '$1******$3@$4');
+    cell = cell.replace(/(\d{1})(.*)(\d{3})/, '$1******$3')
+    document.getElementById('phoneemail').innerHTML = cell;
+  }
+
   $(document).ready(function() {
     startTime();
     setInterval(function () {
       refreshTable();
     }, 5000);
+    <% if ((adminUser != null) && (adminUser.isValid()))
+{ %>
+    hidephoneemail();
+    <% } %>
   });
 
 </script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <%
 
