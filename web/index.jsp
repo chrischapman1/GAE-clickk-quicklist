@@ -171,6 +171,21 @@
 
 <% if ((adminUser != null) && (adminUser.isValid()))
 { %>
+
+<h4>Add 5</h4>
+<form method="post" action="modifyTime">
+  <input type="text" name="timePeriod" value="5"></input>
+  <input type="text" name="isAdd" value="true" hidden="true"></input>
+  <input type="submit" name="submit" value="Submit"></input>
+</form>
+
+<h4>Subtract 5</h4>
+<form method="post" action="modifyTime">
+  <input type="text" name="timePeriod" value="5"></input>
+  <input type="text" name="isAdd" value="false" hidden="true"></input>
+  <input type="submit" name="submit" value="Submit"></input>
+</form>
+
 <h4>Close Day</h4>
 <form method="post" action="closeDay">
   <input type="submit" name="submit" value="Submit"></input>

@@ -106,6 +106,17 @@
     </servlet-mapping>
 
 
+    <display-name>modifyTime</display-name>
+    <servlet>
+        <servlet-name>modifyTime</servlet-name>
+        <servlet-class>controllers.ModifyTime</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>modifyTime</servlet-name>
+        <url-pattern>/modifyTime</url-pattern>
+    </servlet-mapping>
+
+
 
 </web-app>
 
