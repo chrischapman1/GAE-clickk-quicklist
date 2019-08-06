@@ -116,6 +116,25 @@
         <url-pattern>/modifyTime</url-pattern>
     </servlet-mapping>
 
+    <display-name>logoutAdmin</display-name>
+    <servlet>
+        <servlet-name>logoutAdmin</servlet-name>
+        <servlet-class>controllers.LogoutAdmin</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>logoutAdmin</servlet-name>
+        <url-pattern>/logoutAdmin</url-pattern>
+    </servlet-mapping>
+
+    <display-name>addToCart</display-name>
+    <servlet>
+        <servlet-name>addToCart</servlet-name>
+        <servlet-class>controllers.AddToCart</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addToCart</servlet-name>
+        <url-pattern>/addToCart</url-pattern>
+    </servlet-mapping>
 
 
 </web-app>

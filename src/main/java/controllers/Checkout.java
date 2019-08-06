@@ -1,9 +1,6 @@
 package controllers;
 
-import objects.AdminUser;
-import objects.Day;
-import objects.TimeSlot;
-import objects.User;
+import objects.*;
 import beans.ListBean;
 
 import javax.servlet.*;
@@ -20,12 +17,12 @@ public class Checkout extends HttpServlet{
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServletContext context = request.getServletContext();
         TimeSlot ts = (TimeSlot) context.getAttribute("currentTimeSlot");
-
         ts.setPayment(request.getParameter("paymentType"));
-        ts.setPaymentValue(Integer.valueOf(request.getParameter("paymentValue")));
+        ts.setPaymentValue(Float.valueOf(request.getParameter("paymentValue")));
 
         //ts = (TimeSlot) context.getAttribute("currentTimeSlot");
         context.setAttribute("currentTimeSlot", ts);
+        context.setAttribute("cart", new Cart());
         request.getRequestDispatcher("/index.jsp").forward(request,response);
     }
 

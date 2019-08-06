@@ -24,14 +24,14 @@ public class ModifyTime extends HttpServlet{
         {
             System.out.print(request.getParameter("timePeriod") + request.getParameter("isAdd"));
             for(int i=0; i < timeSlots.length ; i++){
-                timeSlots[i].addTime(timePeriod);
+               // timeSlots[i].addTime(timePeriod);
                 System.out.print(timeSlots[i].toString());
             }
         }
         else
         {
             for(int i=0; i < timeSlots.length ; i++){
-                timeSlots[i].subtractTime(timePeriod);
+               // timeSlots[i].subtractTime(timePeriod);
             }
         }
 

@@ -26,7 +26,8 @@ public class NewDay extends HttpServlet{
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServletContext context = request.getServletContext();
         Day day = new Day();
-        day.initialise();
+        boolean isWeekend = Boolean.valueOf(request.getParameter("isWeekend"));
+        day.initialise(isWeekend);
         context.setAttribute("day", day);
         boolean isClosed = true;
         context.setAttribute("isClosed", isClosed);

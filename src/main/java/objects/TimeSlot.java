@@ -10,7 +10,12 @@ public class TimeSlot
     private User emptyUser;
 
     private String payment = "";
-    int paymentValue = 0;
+    private float paymentValue = 0;
+
+
+    public TimeSlot()
+    {
+    }
 
     public TimeSlot(int hour, int minute)
     {
@@ -25,6 +30,7 @@ public class TimeSlot
         return "{ \"time\":\"" + ts.getHourMinute() + "\",\"name\":\""
                 + ts.getUser().getName() + "\",\"details\":\"" + ts.getUser().getPhoneemail() + "\"}";
     }
+
 
     public void addTime(int newTime)
     {
@@ -97,14 +103,14 @@ public class TimeSlot
 
     public String getHourMinute()
     {
-        return hour + ":" + getStringMinute();
+        return hour + " :" + getStringMinute();
     }
 
-    public int getPaymentValue() {
+    public float getPaymentValue() {
         return paymentValue;
     }
 
-    public void setPaymentValue(int paymentValue) {
+    public void setPaymentValue(float paymentValue) {
         this.paymentValue = paymentValue;
     }
 

@@ -22,51 +22,54 @@
 <html>
 <head>
   <title>Quicklist</title>
-  <link href="//db.onlinewebfonts.com/c/d664bf6951144f64f00f5b48099019d3?family=RefrigeratorDeluxeW01-Bold" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" id="astra-theme-css-css" href="https://www.quickcuts.com.au/wp-content/themes/astra/assets/css/minified/menu-animation.min.css?ver=1.6.8" type="text/css" media="all">
+    <link type="text/css" rel="stylesheet" href="/css/style.css">
 
 </head>
 <body>
-<style>
-  table {
-    width: 100%;
-  }
-  tr:nth-child(even) {background: #CCC}
-  tr:nth-child(odd) {background: #FFF}
-</style>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <h1>Welcome to the Quicklist</h1>
 
 <%
   ServletContext context = request.getServletContext();
+  Day day = (Day) context.getAttribute("day");
+  HttpSession sesh = request.getSession();
+  AdminUser adminUser = (AdminUser) sesh.getAttribute("adminUser");
+  TimeSlot[] timeSlots = day.getTimeSlots();
   if ((boolean) context.getAttribute("isClosed")) {
 %>
+
 <h2>The Shop is currently closed</h2>
 <% } else { %>
-<h2>Join the Queue</h2>
+<h2>
+  Next available time slot is <%=day.getNextAvailableTime()%> Join the Queue</h2>
 <form method="post" action="addUser">
-  Name (Required)
-  <input type="text" name="name"></input>
-  Phone or Email (Optional)
-  <input type="text" name="phoneemail"></input>
-  <input type="submit" name="submit" value="Submit"></input>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-5 name">
+              Name (Required)
+              <input type="text" name="name"></input>
+            </div>
+            <!--div class="col-xs-5">
+              Phone or Email (Optional)
+              <input type="text" name="phoneemail"></input>
+            </div-->
+            <div class="col-xs-2 name">
+                 <input type="submit" name="submit" value="Add to Queue"></input>
+            </div>
+        </div>
+    </div>
 </form>
 
 <% } %>
-<h2>
-  Current Time is <div id="time"></div>
-</h2>
+
 
 <table id="ts">
-  <%
-    Day day = (Day) context.getAttribute("day");
-    HttpSession sesh = request.getSession();
-    AdminUser adminUser = (AdminUser) sesh.getAttribute("adminUser");
-    TimeSlot[] timeSlots = day.getTimeSlots(); %>
+
   <tr>
     <th>Time</th>
     <th>Name</th>
-    <th>Details</th>
+    <!--th>Details</th-->
     <th></th>
   </tr>
 
@@ -75,10 +78,10 @@
       Calendar rightNow = Calendar.getInstance();
       int hour = rightNow.get(Calendar.HOUR_OF_DAY);
       int minute = rightNow.get(Calendar.MINUTE);
-      if (timeSlots[i].getHour() > hour)
+      /**if (timeSlots[i].getHour() > hour)
       {
         i++;
-      }
+      }*/
   %>
 
   <tr>
@@ -90,21 +93,33 @@
     <td>
       <%= timeSlots[i].getUser().getName()%>
     </td>
-    <td id="phoneemail">
+    <!--td id="phoneemail">
       <%= timeSlots[i].getUser().getPhoneemail()%>
-    </td>
+    </td-->
+
+    <% if ((adminUser != null) && (adminUser.isValid()))
+    { %>
+
     <td>
-      <% if ((adminUser != null) && (adminUser.isValid()))
-      {
+      <%
+        if (timeSlots[i].getPaymentValue() == 0)
+        {
       %>
       <form method="post" action="pay">
         <input type="text" value="<%=i%>" name="i" hidden="true"></input>
         <input type="submit" name="submit" value="Pay"></input>
       </form>
+        <% }
+          else
+          { %>
+            Paid by <%=timeSlots[i].getPayment()%> for $<%=timeSlots[i].getPaymentValue()%>
+
+         <% } %>
         <form method="post" action="deleteUser">
           <input type="text" value="<%=i%>" name="i" hidden="true"></input>
           <input type="submit" name="submit" value="Delete"></input>
         </form>
+    </td>
       <%
       }
       %>
@@ -114,12 +129,12 @@
   <%}%>
 </table>
 
-<script>
+<script type="text/javascript">
   function refreshTable()
   {
     (function() {
       var timeSlotsJson = "https://clickk-quicklist.appspot.com/currentTimeSlot";
-      //var timeSlotsJson = "http://localhost:8080/currentTimeSlot";
+      //  var timeSlotsJson = "http://localhost:8080/currentTimeSlot";
       $.getJSON(timeSlotsJson)
               .done(function (response) {
                 var timeslots = response["timeslots"];
@@ -133,40 +148,15 @@
     })();
   }
 
-  function startTime() {
-    var today = new Date();
-    var h = today.getHours()%12;
-    var m = today.getMinutes();
-    var s = today.getSeconds();
-    m = checkTime(m);
-    s = checkTime(s);
-    document.getElementById('time').innerHTML =
-            h + ":" + m + ":" + s;
-    var t = setTimeout(startTime, 500);
-  }
-  function checkTime(i) {
-    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
-    return i;
-  }
 
-  function hidephoneemail()
-  {
-
-    var cell = document.getElementById('phoneemail').innerHTML;
-    cell = cell.replace(/(\w{1})(.*)(\w{1})@(.*)/, '$1******$3@$4');
-    cell = cell.replace(/(\d{1})(.*)(\d{3})/, '$1******$3')
-    document.getElementById('phoneemail').innerHTML = cell;
-  }
 
   $(document).ready(function() {
-    startTime();
     setInterval(function () {
       refreshTable();
     }, 5000);
-    <% if ((adminUser != null) && (adminUser.isValid()))
-{ %>
-    hidephoneemail();
-    <% } %>
+
+
+
   });
 
 </script>
@@ -188,6 +178,12 @@
 <% if ((adminUser != null) && (adminUser.isValid()))
 { %>
 
+<h4>Pay for extra user</h4>
+<form method="post" action="pay">
+    <input type="text" value="-1" name="i" hidden="true"></input>
+    <input type="submit" name="submit" value="Pay"></input>
+</form>
+
 <h4>Add 5</h4>
 <form method="post" action="modifyTime">
   <input type="text" name="timePeriod" value="5"></input>
@@ -202,17 +198,26 @@
   <input type="submit" name="submit" value="Submit"></input>
 </form>
 
-<h4>Close Day</h4>
+<h4>End of Day</h4>
 <form method="post" action="closeDay">
   <input type="submit" name="submit" value="Submit"></input>
 </form>
 
 <h4>Open Day</h4>
 <form method="post" action="openDay">
+    Is it a weekend? <input type="checkbox" name="isWeekend" value="false"></input>
   <input type="submit" name="submit" value="Submit"></input>
 </form>
 
+<h4>Log Out</h4>
+<form method="post" action="logoutAdmin">
+    <input type="submit" name="submit" value="Submit"></input>
+</form>
+
 <%} %>
+
+
+
 </body>
 </html>
 

@@ -10,6 +10,9 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 @WebServlet(urlPatterns={"/addUser"})
@@ -22,13 +25,29 @@ public class AddUserController extends HttpServlet{
         ServletContext context = request.getServletContext();
         Day day = (Day) context.getAttribute("day");
         TimeSlot[] timeSlots = day.getTimeSlots();
-        for(int i=0; i < timeSlots.length ; i++) {
+
+        SimpleDateFormat format = new SimpleDateFormat("hh");
+        String formattedDate = format.format(new Date());
+        int hour  = Integer.parseInt(formattedDate);
+
+        SimpleDateFormat formatMin = new SimpleDateFormat("mm");
+        String formattedDateMin = formatMin.format(new Date());
+        int min  = Integer.parseInt(formattedDateMin);
+
+        SimpleDateFormat formatAM = new SimpleDateFormat("aa");
+        String formattedDateAMPM = formatAM.format(new Date());
+
+        for (int i =0; i < timeSlots.length; i++)
+        {
             if (timeSlots[i].getUser().getName().equals(""))
             {
-                timeSlots[i].addUser(current);
-                break;
+                if ((hour < timeSlots[i].getHour()) || ((hour == timeSlots[i].getHour()) && (min < timeSlots[i].getMinute()))) {
+                    timeSlots[i].addUser(current);
+                }
             }
+            //No empty
         }
+
 
         context.setAttribute("day", day);
         request.getRequestDispatcher("/index.jsp").forward(request,response);

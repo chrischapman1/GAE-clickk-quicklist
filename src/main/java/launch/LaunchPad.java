@@ -1,6 +1,7 @@
 package launch;
 
 import beans.ListBean;
+import objects.Cart;
 import objects.Day;
 import objects.User;
 
@@ -111,8 +112,10 @@ public class LaunchPad implements ServletContextListener {
             }; */
             ServletContext session = event.getServletContext();
             Day day = new Day();
-            day.initialise();
+            day.initialise(false);
+            Cart cart = new Cart();
             session.setAttribute("day", day);
+            session.setAttribute("cart", cart);
             boolean isClosed = false;
             session.setAttribute("isClosed", isClosed);
         }

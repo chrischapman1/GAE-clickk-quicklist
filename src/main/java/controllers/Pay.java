@@ -19,7 +19,18 @@ public class Pay extends HttpServlet{
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServletContext context = request.getServletContext();
         Day day = (Day) context.getAttribute("day");
-        TimeSlot ts = day.getTimeSlots()[Integer.valueOf(request.getParameter("i"))];
+        TimeSlot ts = new TimeSlot();
+
+        int i = Integer.valueOf(request.getParameter("i"));
+        if (i == -1)
+        {
+            ts = new TimeSlot(-1, 00);
+        }
+        else
+        {
+            ts = day.getTimeSlots()[i];
+        }
+
         //ts = (TimeSlot) context.getAttribute("currentTimeSlot");
         context.setAttribute("currentTimeSlot", ts);
         request.getRequestDispatcher("/pay.jsp").forward(request,response);

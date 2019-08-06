@@ -12,20 +12,13 @@ import javax.servlet.http.*;
 import java.io.*;
 
 
-@WebServlet(urlPatterns={"/openDay"})
-public class OpenDay extends HttpServlet{
+@WebServlet(urlPatterns={"/logoutAdmin"})
+public class LogoutAdmin extends HttpServlet{
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ServletContext context = request.getServletContext();
-        Day day = new Day();
-        boolean isWeekend = Boolean.valueOf(request.getParameter("isWeekend"));
-        day.initialise(isWeekend);
-        context.setAttribute("day", day);
-        boolean isClosed = false;
-        context.setAttribute("isClosed", isClosed);
         HttpSession sesh = request.getSession();
-        sesh.invalidate();
+        sesh.setAttribute("adminUser", null);
         request.getRequestDispatcher("/index.jsp").forward(request,response);
     }
 
