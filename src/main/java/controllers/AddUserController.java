@@ -26,9 +26,13 @@ public class AddUserController extends HttpServlet{
         Day day = (Day) context.getAttribute("day");
         TimeSlot[] timeSlots = day.getTimeSlots();
 
-        SimpleDateFormat format = new SimpleDateFormat("hh");
+        // Time should be expressed in 24-hour time; to enable logic for booking
+        // ---------------------------------------------------------------------
+        SimpleDateFormat format = new SimpleDateFormat("HH");
+        // ---------------------------------------------------------------------
         String formattedDate = format.format(new Date());
         int hour  = Integer.parseInt(formattedDate);
+
 
         SimpleDateFormat formatMin = new SimpleDateFormat("mm");
         String formattedDateMin = formatMin.format(new Date());
@@ -43,11 +47,13 @@ public class AddUserController extends HttpServlet{
             {
                 if ((hour < timeSlots[i].getHour()) || ((hour == timeSlots[i].getHour()) && (min < timeSlots[i].getMinute()))) {
                     timeSlots[i].addUser(current);
+                    // ---------------------------------------------------------------------
+                    break;
+                    // ---------------------------------------------------------------------
                 }
             }
             //No empty
         }
-
 
         context.setAttribute("day", day);
         request.getRequestDispatcher("/index.jsp").forward(request,response);
