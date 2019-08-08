@@ -133,8 +133,7 @@
   function refreshTable()
   {
     (function() {
-      //
-         var timeSlotsJson = "https://clickk-quicklist.appspot.com/currentTimeSlot";
+      var timeSlotsJson = "https://clickk-quicklist.appspot.com/currentTimeSlot";
       //var timeSlotsJson = "http://localhost:8080/currentTimeSlot";
       $.getJSON(timeSlotsJson)
               .done(function (response) {

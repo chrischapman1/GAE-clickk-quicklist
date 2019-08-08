@@ -13,6 +13,7 @@ import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 
 @WebServlet(urlPatterns={"/addUser"})
@@ -30,16 +31,15 @@ public class AddUserController extends HttpServlet{
         // ---------------------------------------------------------------------
         SimpleDateFormat format = new SimpleDateFormat("HH");
         // ---------------------------------------------------------------------
+
+        format.setTimeZone(TimeZone.getTimeZone("Australia/NSW"));
         String formattedDate = format.format(new Date());
         int hour  = Integer.parseInt(formattedDate);
 
-
         SimpleDateFormat formatMin = new SimpleDateFormat("mm");
+        formatMin.setTimeZone(TimeZone.getTimeZone("Australia/NSW"));
         String formattedDateMin = formatMin.format(new Date());
         int min  = Integer.parseInt(formattedDateMin);
-
-        SimpleDateFormat formatAM = new SimpleDateFormat("aa");
-        String formattedDateAMPM = formatAM.format(new Date());
 
         for (int i =0; i < timeSlots.length; i++)
         {

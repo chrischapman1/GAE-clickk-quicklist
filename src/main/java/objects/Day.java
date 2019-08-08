@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.TimeZone;
 
 public class Day {
 
@@ -24,16 +25,15 @@ public class Day {
 
     public String getNextAvailableTime()
     {
-        SimpleDateFormat format = new SimpleDateFormat("hh");
+        SimpleDateFormat format = new SimpleDateFormat("HH");
+        format.setTimeZone(TimeZone.getTimeZone("Australia/NSW"));
         String formattedDate = format.format(new Date());
         int hour  = Integer.parseInt(formattedDate);
 
         SimpleDateFormat formatMin = new SimpleDateFormat("mm");
+        formatMin.setTimeZone(TimeZone.getTimeZone("Australia/NSW"));
         String formattedDateMin = formatMin.format(new Date());
         int min  = Integer.parseInt(formattedDateMin);
-
-        SimpleDateFormat formatAM = new SimpleDateFormat("aa");
-        String formattedDateAMPM = formatAM.format(new Date());
 
         for (int i =0; i < timeSlots.length; i++)
         {
@@ -69,10 +69,10 @@ public class Day {
     {
         isWeekend = false;
         timeSlots = new TimeSlot[32];
-        timeSlots[0] = new TimeSlot(9, 0);
-        timeSlots[1] = new TimeSlot(9, 15);
-        timeSlots[2] = new TimeSlot(9, 30);
-        timeSlots[3] = new TimeSlot(9, 45);
+        timeSlots[0] = new TimeSlot(8, 0);
+        timeSlots[1] = new TimeSlot(8, 15);
+        timeSlots[2] = new TimeSlot(8, 30);
+        timeSlots[3] = new TimeSlot(8, 45);
 
         timeSlots[4] = new TimeSlot(10, 0);
         timeSlots[5] = new TimeSlot(10, 15);
