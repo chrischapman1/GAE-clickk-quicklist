@@ -1,17 +1,37 @@
 package objects;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.TimeZone;
+import java.util.*;
 
 public class Day {
 
     private TimeSlot[] timeSlots;
     private boolean isWeekend;
-    public TimeSlot[] getTimeSlots() {
-        return timeSlots;
+    public TimeSlot[] getTimeSlots(boolean isClient) {
+        if (!(isClient))
+        {
+            return timeSlots;
+        }
+        else
+        {
+            List<TimeSlot> clientTimeSlots = new LinkedList<>();
+            for (int i =0; i < timeSlots.length; i++)
+            {
+                if (!(timeSlots[i].getUser().getName().equals("")))
+                {
+                    clientTimeSlots.add(timeSlots[i]);
+                }
+            }
+            for (int i =0; i < timeSlots.length; i++)
+            {
+                if ((timeSlots[i].getUser().getName().equals("")))
+                {
+                    clientTimeSlots.add(timeSlots[i]);
+                    break;
+                }
+            }
+            return clientTimeSlots.toArray(new TimeSlot[clientTimeSlots.size()]);
+        }
     }
 
     public void setTimeSlots(TimeSlot[] timeSlots) {
@@ -69,10 +89,10 @@ public class Day {
     {
         isWeekend = false;
         timeSlots = new TimeSlot[32];
-        timeSlots[0] = new TimeSlot(8, 0);
-        timeSlots[1] = new TimeSlot(8, 15);
-        timeSlots[2] = new TimeSlot(8, 30);
-        timeSlots[3] = new TimeSlot(8, 45);
+        timeSlots[0] = new TimeSlot(9, 0);
+        timeSlots[1] = new TimeSlot(9, 15);
+        timeSlots[2] = new TimeSlot(9, 30);
+        timeSlots[3] = new TimeSlot(9, 45);
 
         timeSlots[4] = new TimeSlot(10, 0);
         timeSlots[5] = new TimeSlot(10, 15);

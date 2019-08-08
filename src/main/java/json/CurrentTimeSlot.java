@@ -26,7 +26,7 @@ public class CurrentTimeSlot extends HttpServlet{
             out = response.getWriter();
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            out.print(getJsonDay(day.getTimeSlots()));
+            out.print(getJsonDay(day.getTimeSlots(false)));
             out.flush();
         } catch (IOException e) {
             e.printStackTrace();

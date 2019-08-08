@@ -1,17 +1,13 @@
 package launch;
 
-import beans.ListBean;
 import objects.Cart;
 import objects.Day;
-import objects.User;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletContextEvent;
-import javax.servlet.annotation.WebListener;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionContext;
-import java.util.Enumeration;
+import java.io.IOException;
+import java.sql.SQLException;
 
 
 public class LaunchPad implements ServletContextListener {

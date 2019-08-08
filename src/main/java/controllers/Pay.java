@@ -28,7 +28,7 @@ public class Pay extends HttpServlet{
         }
         else
         {
-            ts = day.getTimeSlots()[i];
+            ts = day.getTimeSlots(false)[i];
         }
 
         //ts = (TimeSlot) context.getAttribute("currentTimeSlot");

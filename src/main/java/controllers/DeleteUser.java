@@ -21,7 +21,7 @@ public class DeleteUser extends HttpServlet{
         Day day = (Day) context.getAttribute("day");
         int i = Integer.valueOf(request.getParameter("i"));
 
-        TimeSlot[] timeSlots = day.getTimeSlots();
+        TimeSlot[] timeSlots = day.getTimeSlots(false);
         TimeSlot current = new TimeSlot(timeSlots[i].getHour(), timeSlots[i].getMinute());
         timeSlots[i] = current;
         day.setTimeSlots(timeSlots);

@@ -16,7 +16,7 @@ public class ModifyTime extends HttpServlet{
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServletContext context = request.getServletContext();
         Day day = (Day) context.getAttribute("day");
-        TimeSlot[] timeSlots = day.getTimeSlots();
+        TimeSlot[] timeSlots = day.getTimeSlots(false);
         int timePeriod = Integer.valueOf(request.getParameter("timePeriod"));
         boolean isAdd = Boolean.valueOf(request.getParameter("isAdd"));
 
@@ -24,14 +24,14 @@ public class ModifyTime extends HttpServlet{
         {
             System.out.print(request.getParameter("timePeriod") + request.getParameter("isAdd"));
             for(int i=0; i < timeSlots.length ; i++){
-               // timeSlots[i].addTime(timePeriod);
+                timeSlots[i].addTime(timePeriod);
                 System.out.print(timeSlots[i].toString());
             }
         }
         else
         {
             for(int i=0; i < timeSlots.length ; i++){
-               // timeSlots[i].subtractTime(timePeriod);
+                timeSlots[i].subtractTime(timePeriod);
             }
         }
 

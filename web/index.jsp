@@ -28,14 +28,14 @@
 <body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<h1>Welcome to the Quicklist</h1>
+<h1>Welcome to the Quicklist - Dylan</h1>
 
 <%
   ServletContext context = request.getServletContext();
   Day day = (Day) context.getAttribute("day");
   HttpSession sesh = request.getSession();
   AdminUser adminUser = (AdminUser) sesh.getAttribute("adminUser");
-  TimeSlot[] timeSlots = day.getTimeSlots();
+  TimeSlot[] timeSlots = day.getTimeSlots(false);
   if ((boolean) context.getAttribute("isClosed")) {
 %>
 
@@ -134,7 +134,7 @@
   {
     (function() {
       var timeSlotsJson = "https://clickk-quicklist.appspot.com/currentTimeSlot";
-      //var timeSlotsJson = "http://localhost:8080/currentTimeSlot";
+      //  var timeSlotsJson = "http://localhost:8080/currentTimeSlot";
       $.getJSON(timeSlotsJson)
               .done(function (response) {
                 var timeslots = response["timeslots"];

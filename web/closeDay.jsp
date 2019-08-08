@@ -29,7 +29,7 @@
     <%
     ServletContext context = request.getServletContext();
     Day day = (Day) context.getAttribute("day");
-    TimeSlot[] current = day.getTimeSlots();
+    TimeSlot[] current = day.getTimeSlots(false);
     int cash = 0, card = 0, giftvoucher = 0, free = 0;
     for (int i=0; i < current.length; i++)
     {

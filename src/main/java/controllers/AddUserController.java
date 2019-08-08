@@ -25,7 +25,7 @@ public class AddUserController extends HttpServlet{
 
         ServletContext context = request.getServletContext();
         Day day = (Day) context.getAttribute("day");
-        TimeSlot[] timeSlots = day.getTimeSlots();
+        TimeSlot[] timeSlots = day.getTimeSlots(false);
 
         // Time should be expressed in 24-hour time; to enable logic for booking
         // ---------------------------------------------------------------------

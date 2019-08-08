@@ -88,6 +88,17 @@ public class TimeSlot
         return hour;
     }
 
+    public int getDisplayHour() {
+        if (hour == 12)
+        {
+            return 12;
+        }
+        else
+        {
+            return hour % 12;
+        }
+    }
+
     public int getMinute() {
         return minute;
     }
@@ -103,7 +114,7 @@ public class TimeSlot
 
     public String getHourMinute()
     {
-        return hour + " :" + getStringMinute();
+        return getDisplayHour() + " : " + getStringMinute();
     }
 
     public float getPaymentValue() {
