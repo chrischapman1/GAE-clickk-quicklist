@@ -22,20 +22,22 @@
 <html>
 <head>
   <title>Quicklist</title>
-    <link type="text/css" rel="stylesheet" href="/css/style.css">
-
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="/css/style.css">
+  <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
 </head>
-<body>
+<body class="home">
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<h1>Welcome to the Quicklist - Dylan</h1>
+<div class="welcome">
+<h1>Welcome to the Quicklist</h1>
 
 <%
   ServletContext context = request.getServletContext();
   Day day = (Day) context.getAttribute("day");
   HttpSession sesh = request.getSession();
   AdminUser adminUser = (AdminUser) sesh.getAttribute("adminUser");
-  TimeSlot[] timeSlots = day.getTimeSlots(false);
+  TimeSlot[] timeSlotsClient = day.getTimeSlots(false);
+  TimeSlot[] timeSlotsUser = day.getTimeSlots(false);
   if ((boolean) context.getAttribute("isClosed")) {
 %>
 
@@ -43,10 +45,12 @@
 <% } else { %>
 <h2>
   Next available time slot is <%=day.getNextAvailableTime()%> Join the Queue</h2>
-<form method="post" action="addUser">
-    <div class="container">
+</div>
+
+<form method="post" action="addUser" class="addUser">
+    <div class="container max-width">
         <div class="row">
-            <div class="col-xs-5 name">
+            <div class="col-xs-6 text-center">
               Name (Required)
               <input type="text" name="name"></input>
             </div>
@@ -54,7 +58,7 @@
               Phone or Email (Optional)
               <input type="text" name="phoneemail"></input>
             </div-->
-            <div class="col-xs-2 name">
+            <div class="col-xs-6 text-center">
                  <input type="submit" name="submit" value="Add to Queue"></input>
             </div>
         </div>
@@ -63,46 +67,68 @@
 
 <% } %>
 
+<% if ((adminUser == null) || (!(adminUser.isValid())))
+{ %>
 
+<div class="container max-width">
+  <div class="row">
 <table id="ts">
 
   <tr>
     <th>Time</th>
     <th>Name</th>
     <!--th>Details</th-->
-    <th></th>
+
   </tr>
 
   <%
-    for(int i=0; i < timeSlots.length ; i++){
-      Calendar rightNow = Calendar.getInstance();
-      int hour = rightNow.get(Calendar.HOUR_OF_DAY);
-      int minute = rightNow.get(Calendar.MINUTE);
-      /**if (timeSlots[i].getHour() > hour)
-      {
-        i++;
-      }*/
+    for(int i=0; i < timeSlotsClient.length ; i++){
   %>
 
-  <tr>
-    <td>
-      <%=timeSlots[i].getHour()%> : <%= timeSlots[i].getStringMinute()%>
+    <tr>
+        <td class="time">
+            <%=timeSlotsClient[i].getHour()%> : <%= timeSlotsClient[i].getStringMinute()%>
 
-    </td>
+        </td>
 
-    <td>
-      <%= timeSlots[i].getUser().getName()%>
-    </td>
-    <!--td id="phoneemail">
-      <%= timeSlots[i].getUser().getPhoneemail()%>
-    </td-->
+        <td>
+            <%= timeSlotsClient[i].getUser().getName()%>
+        </td>
+  </tr>
+  <% }
+  }%>
 
-    <% if ((adminUser != null) && (adminUser.isValid()))
+  </table>
+    <!----------------- END TIME SLOTS CLIENT ----------------->
+
+      <% if ((adminUser != null) && (adminUser.isValid()))
     { %>
+
+    <table id="ts">
+
+      <tr>
+        <th>Time</th>
+        <th>Name</th>
+        <th>Details</th>
+      </tr>
+
+      <%
+        for(int i=0; i < timeSlotsClient.length ; i++){
+      %>
+
+      <tr>
+        <td class="time" >
+          <%=timeSlotsClient[i].getDisplayHour()%> : <%= timeSlotsClient[i].getStringMinute()%>
+
+        </td>
+
+        <td class="name">
+          <%= timeSlotsClient[i].getUser().getName()%>
+        </td>
 
     <td>
       <%
-        if (timeSlots[i].getPaymentValue() == 0)
+        if (timeSlotsUser[i].getPaymentValue() == 0)
         {
       %>
       <form method="post" action="pay">
@@ -112,7 +138,7 @@
         <% }
           else
           { %>
-            Paid by <%=timeSlots[i].getPayment()%> for $<%=timeSlots[i].getPaymentValue()%>
+            Paid by <%=timeSlotsUser[i].getPayment()%> for $<%=timeSlotsUser[i].getPaymentValue()%>
 
          <% } %>
         <form method="post" action="deleteUser">
@@ -123,26 +149,30 @@
       <%
       }
       %>
-    </td>
+
   </tr>
+    </table>
 
   <%}%>
-</table>
 
+
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
   function refreshTable()
   {
     (function() {
-      var timeSlotsJson = "https://clickk-quicklist.appspot.com/currentTimeSlot";
-      //  var timeSlotsJson = "http://localhost:8080/currentTimeSlot";
+      //var timeSlotsJson = "https://clickk-quicklist.appspot.com/currentTimeSlot";
+      var timeSlotsJson = "http://localhost:8080/currentTimeSlot";
       $.getJSON(timeSlotsJson)
               .done(function (response) {
                 var timeslots = response["timeslots"];
+
                 for (i = 0; i < timeslots.length; i++) {
-                  console.log(timeslots[i]["time"]);
-                  document.getElementById("ts").rows[i+1].cells[0].innerHTML = (timeslots[i]["time"]);
-                  document.getElementById("ts").rows[i+1].cells[1].innerHTML = (timeslots[i]["name"]);
-                  document.getElementById("ts").rows[i+1].cells[2].innerHTML = (timeslots[i]["details"]);
+                        document.getElementById("ts").rows[i + 1].cells[0].innerHTML = (timeslots[i]["time"]);
+                        document.getElementById("ts").rows[i + 1].cells[1].innerHTML = (timeslots[i]["name"]);
+
+                 // document.getElementById("ts").rows[i+1].cells[2].innerHTML = (timeslots[i]["details"]);
                 }
               });
     })();
@@ -160,60 +190,88 @@
   });
 
 </script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+<div class="container max-width">
+  <div class="row">
 <%
 
   if (adminUser==null)
   {
 %>
-  <h4>Admin Login</h4>
+  Admin Login
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4">
   <form method="post" action="loginAdmin">
     <input type="text" name="name"></input>
     <input type="text" name="password" type="password"></input>
     <input type="submit" name="submit" value="Submit"></input>
   </form>
+      </div>
+    </div>
+  </div>
 <%  } %>
 
 <% if ((adminUser != null) && (adminUser.isValid()))
 { %>
 
-<h4>Pay for extra user</h4>
+    <h4>Admin Portal</h4>
+
+<div class="container">
+  <div class="row">
+
+<div class="col-sm-4">
 <form method="post" action="pay">
     <input type="text" value="-1" name="i" hidden="true"></input>
-    <input type="submit" name="submit" value="Pay"></input>
+    <input type="submit" name="submit" value="Pay for extra user"></input>
 </form>
+</div>
+<div class="col-sm-4 ">
 
-<h4>Add 5</h4>
 <form method="post" action="modifyTime">
   <input type="text" name="timePeriod" value="5"></input>
   <input type="text" name="isAdd" value="true" hidden="true"></input>
-  <input type="submit" name="submit" value="Submit"></input>
+  <input type="submit" name="submit" value="Add Time"></input>
 </form>
+</div>
+    <div class="col-sm-4">
 
-<h4>Subtract 5</h4>
 <form method="post" action="modifyTime">
   <input type="text" name="timePeriod" value="5"></input>
   <input type="text" name="isAdd" value="false" hidden="true"></input>
-  <input type="submit" name="submit" value="Submit"></input>
+  <input type="submit" name="submit" value="Subtract Time"></input>
 </form>
+  </div>
+  </div>
+</div>
 
-<h4>End of Day</h4>
+  <div class="container">
+    <div class="row">
+
+    <div class="col-sm-4 ">
+
 <form method="post" action="closeDay">
-  <input type="submit" name="submit" value="Submit"></input>
+  <input type="submit" name="submit" value="End of Day"></input>
 </form>
+    </div>
+      <div class="col-sm-4 ">
 
-<h4>Open Day</h4>
+
 <form method="post" action="openDay">
     Is it a weekend? <input type="checkbox" name="isWeekend" value="false"></input>
-  <input type="submit" name="submit" value="Submit"></input>
+  <input type="submit" name="submit" value="Open Day"></input>
 </form>
+      </div>
+      <div class="col-sm-4 ">
 
-<h4>Log Out</h4>
 <form method="post" action="logoutAdmin">
-    <input type="submit" name="submit" value="Submit"></input>
+    <input type="submit" name="submit" value="Log Out"></input>
 </form>
-
+  </div>
+</div>
+  </div>
+  </div>
+</div>
 <%} %>
 
 

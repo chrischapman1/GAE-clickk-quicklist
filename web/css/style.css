@@ -24,8 +24,8 @@ h1,h2,h3,h4,h5,h6
 table {
     width: 100%;
 }
-tr:nth-child(even) {color: #8a1a16; background: #cdcdcd; }
-tr:nth-child(odd) {background: #FFF; color:  rgb(0, 35, 71);}
+.home tr:nth-child(even) {background-image: linear-gradient(to right,  rgb(0, 35, 71) , #243b55) ; color: white; }
+.home  tr:nth-child(odd) {background: white ; color: #841d16;}
 
 .welcome, #ts, .addUser
 {

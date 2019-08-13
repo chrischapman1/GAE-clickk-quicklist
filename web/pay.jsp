@@ -11,14 +11,20 @@
 <html>
 <head>
     <title>Pay</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="/css/style.css">
+    <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
 </head>
 <body>
 <%
     ServletContext context = request.getServletContext();
     TimeSlot ts = (TimeSlot) context.getAttribute("currentTimeSlot");
 %>
-<h1> Pay for user <%= ts.getUser().getName()%></h1>
+<h1 class="text-center"> Pay for user <%= ts.getUser().getName()%></h1>
 
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
 <form action="addToCart" method="post" class="cartItem">
     Men's Haircut
     <input type="checkbox" value="mensHaircut" name="cutType">
@@ -46,7 +52,9 @@
     <input type="submit" name="Submit">
 </form>
 
-<table>
+        </div>
+        <div class="col-sm-4">
+    <table>
     <th>Item & Price</th>
 <%
     Cart c = (Cart) context.getAttribute("cart");
@@ -56,7 +64,8 @@
 <% } %>
 </table>
 <h4>Total is $<%=c.getTotal()%></h4>
-
+        </div>
+        <div class="col-sm-4">
 <form action="checkout" method="post">
     <select name="paymentType">
         <option value="card">Card</option>
@@ -64,11 +73,14 @@
         <option value="giftVoucher">Gift Voucher</option>
         <option value="free">Free</option>
     </select>
+    <br>
     Modify Total
     <input type="text" value="<%=c.getTotal()%>" name="paymentValue">
-    Checkout
-    <input type="submit" name="Submit">
+    <br>
+    <input type="submit" name="Checkout">
 </form>
-
+        </div>
+    </div>
+</div>
 </body>
 </html>
