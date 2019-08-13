@@ -46,7 +46,8 @@ public class CurrentTimeSlot extends HttpServlet{
         }
         sb.deleteCharAt(sb.lastIndexOf(","));
         sb.append("]}");
-        System.out.print(sb.toString());
+        // DEBUGGING - print JSON string
+        //System.out.print(sb.toString());
         return sb.toString();
     }
 

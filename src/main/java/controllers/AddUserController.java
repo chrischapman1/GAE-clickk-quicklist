@@ -1,5 +1,6 @@
 package controllers;
 
+import config.MySQLConnection;
 import objects.AdminUser;
 import objects.Day;
 import objects.TimeSlot;
@@ -40,6 +41,9 @@ public class AddUserController extends HttpServlet{
         formatMin.setTimeZone(TimeZone.getTimeZone("Australia/NSW"));
         String formattedDateMin = formatMin.format(new Date());
         int min  = Integer.parseInt(formattedDateMin);
+
+        // Test DB Connection
+        System.out.println(MySQLConnection.getDB());
 
         for (int i =0; i < timeSlots.length; i++)
         {

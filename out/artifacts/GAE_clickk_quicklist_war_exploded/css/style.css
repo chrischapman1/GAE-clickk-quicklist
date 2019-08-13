@@ -1,0 +1,60 @@
+html
+{
+    font-family: "RefrigeratorDeluxeW01-Bold" !important;
+}
+
+h1,h2,h3,h4,h5,h6
+{
+    font-size: 28pt;
+}
+
+.name, .name input
+{
+    font-size: 16pt;
+}
+
+@font-face {font-family: "RefrigeratorDeluxeW01-Bold";
+    src: url("https://db.onlinewebfonts.com/t/d664bf6951144f64f00f5b48099019d3.eot"); /* IE9*/
+    src: url("https://db.onlinewebfonts.com/t/d664bf6951144f64f00f5b48099019d3.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+    url("https://db.onlinewebfonts.com/t/d664bf6951144f64f00f5b48099019d3.woff2") format("woff2"), /* chrome firefox */
+    url("https://db.onlinewebfonts.com/t/d664bf6951144f64f00f5b48099019d3.woff") format("woff"), /* chrome firefox */
+    url("https://db.onlinewebfonts.com/t/d664bf6951144f64f00f5b48099019d3.ttf") format("truetype"), /* chrome firefox opera Safari, Android, iOS 4.2+*/
+    url("https://db.onlinewebfonts.com/t/d664bf6951144f64f00f5b48099019d3.svg#RefrigeratorDeluxeW01-Bold") format("svg"); /* iOS 4.1- */ }
+
+table {
+    width: 100%;
+}
+.home tr:nth-child(even) {background-image: linear-gradient(to right,  rgb(0, 35, 71) , #243b55) ; color: white; }
+.home  tr:nth-child(odd) {background: white ; color: #841d16;}
+
+.welcome, #ts, .addUser
+{
+    text-align: center;
+}
+
+.max-width
+{
+    width: 70%;
+    margin: 0 15%;
+}
+
+.addUser
+{
+    margin: 40px 0;
+}
+
+.submit input
+{
+    width: 200px;
+    margin: 0 auto;
+}
+
+.time
+{
+    font-family: 'Orbitron', sans-serif;
+}
+
+#ts tr
+{
+    height: 50px;
+}

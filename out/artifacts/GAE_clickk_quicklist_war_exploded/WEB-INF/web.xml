@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         version="2.5"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+    <listener>
+        <listener-class>
+            launch.LaunchPad
+        </listener-class>
+    </listener>
+
+    <display-name>addUser</display-name>
+       <servlet>
+            <servlet-name>addUser</servlet-name>
+            <servlet-class>controllers.AddUserController</servlet-class>
+        </servlet>
+       <servlet-mapping>
+           <servlet-name>addUser</servlet-name>
+             <url-pattern>/addUser</url-pattern>
+        </servlet-mapping>
+
+
+
+    <display-name>loginAdmin</display-name>
+    <servlet>
+        <servlet-name>loginAdmin</servlet-name>
+        <servlet-class>controllers.LoginAdmin</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>loginAdmin</servlet-name>
+        <url-pattern>/loginAdmin</url-pattern>
+    </servlet-mapping>
+
+
+    <display-name>deleteUser</display-name>
+    <servlet>
+        <servlet-name>deleteUser</servlet-name>
+        <servlet-class>controllers.DeleteUser</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteUser</servlet-name>
+        <url-pattern>/deleteUser</url-pattern>
+    </servlet-mapping>
+
+
+    <display-name>closeDay</display-name>
+    <servlet>
+        <servlet-name>closeDay</servlet-name>
+        <servlet-class>controllers.CloseDay</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>closeDay</servlet-name>
+        <url-pattern>/closeDay</url-pattern>
+    </servlet-mapping>
+
+    <display-name>pay</display-name>
+    <servlet>
+        <servlet-name>pay</servlet-name>
+        <servlet-class>controllers.Pay</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>pay</servlet-name>
+        <url-pattern>/pay</url-pattern>
+    </servlet-mapping>
+
+    <display-name>checkout</display-name>
+    <servlet>
+        <servlet-name>checkout</servlet-name>
+        <servlet-class>controllers.Checkout</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>checkout</servlet-name>
+        <url-pattern>/checkout</url-pattern>
+    </servlet-mapping>
+
+
+    <display-name>newDay</display-name>
+    <servlet>
+        <servlet-name>newDay</servlet-name>
+        <servlet-class>controllers.NewDay</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>newDay</servlet-name>
+        <url-pattern>/newDay</url-pattern>
+    </servlet-mapping>
+
+    <display-name>currentTimeSlot</display-name>
+    <servlet>
+        <servlet-name>currentTimeSlot</servlet-name>
+        <servlet-class>json.CurrentTimeSlot</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>currentTimeSlot</servlet-name>
+        <url-pattern>/currentTimeSlot</url-pattern>
+    </servlet-mapping>
+
+    <display-name>openDay</display-name>
+    <servlet>
+        <servlet-name>openDay</servlet-name>
+        <servlet-class>controllers.OpenDay</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>openDay</servlet-name>
+        <url-pattern>/openDay</url-pattern>
+    </servlet-mapping>
+
+
+    <display-name>modifyTime</display-name>
+    <servlet>
+        <servlet-name>modifyTime</servlet-name>
+        <servlet-class>controllers.ModifyTime</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>modifyTime</servlet-name>
+        <url-pattern>/modifyTime</url-pattern>
+    </servlet-mapping>
+
+    <display-name>logoutAdmin</display-name>
+    <servlet>
+        <servlet-name>logoutAdmin</servlet-name>
+        <servlet-class>controllers.LogoutAdmin</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>logoutAdmin</servlet-name>
+        <url-pattern>/logoutAdmin</url-pattern>
+    </servlet-mapping>
+
+    <display-name>addToCart</display-name>
+    <servlet>
+        <servlet-name>addToCart</servlet-name>
+        <servlet-class>controllers.AddToCart</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addToCart</servlet-name>
+        <url-pattern>/addToCart</url-pattern>
+    </servlet-mapping>
+
+
+</web-app>
+
