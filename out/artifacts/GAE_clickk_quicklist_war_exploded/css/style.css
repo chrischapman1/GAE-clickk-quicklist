@@ -58,3 +58,7 @@ table {
 {
     height: 50px;
 }
+
+.hide {
+    display: none;
+}

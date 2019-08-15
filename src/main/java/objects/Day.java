@@ -109,7 +109,6 @@ public class Day {
         timeSlots[14] = new TimeSlot(12, 30);
         timeSlots[15] = new TimeSlot(12, 45);
 
-        // ---------------------------------------------------------------------
         timeSlots[16] = new TimeSlot(13, 0);
         timeSlots[17] = new TimeSlot(13, 15);
         timeSlots[18] = new TimeSlot(13, 30);
@@ -129,27 +128,6 @@ public class Day {
         timeSlots[29] = new TimeSlot(16, 15);
         timeSlots[30] = new TimeSlot(16, 30);
         timeSlots[31] = new TimeSlot(16, 45);
-        // ---------------------------------------------------------------------
-
-//        timeSlots[16] = new TimeSlot(1, 0);
-//        timeSlots[17] = new TimeSlot(1, 15);
-//        timeSlots[18] = new TimeSlot(1, 30);
-//        timeSlots[19] = new TimeSlot(1, 45);
-//
-//        timeSlots[20] = new TimeSlot(2, 0);
-//        timeSlots[21] = new TimeSlot(2, 15);
-//        timeSlots[22] = new TimeSlot(2, 30);
-//        timeSlots[23] = new TimeSlot(2, 45);
-//
-//        timeSlots[24] = new TimeSlot(3, 0);
-//        timeSlots[25] = new TimeSlot(3, 15);
-//        timeSlots[26] = new TimeSlot(3, 30);
-//        timeSlots[27] = new TimeSlot(3, 45);
-//
-//        timeSlots[28] = new TimeSlot(4, 0);
-//        timeSlots[29] = new TimeSlot(4, 15);
-//        timeSlots[30] = new TimeSlot(4, 30);
-//        timeSlots[31] = new TimeSlot(4, 45);
     }
 
     public void assignWeekend()

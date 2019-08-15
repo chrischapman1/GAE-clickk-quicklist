@@ -56,7 +56,6 @@ public class AddUserController extends HttpServlet{
                     // ---------------------------------------------------------------------
                 }
             }
-            //No empty
         }
 
         context.setAttribute("day", day);

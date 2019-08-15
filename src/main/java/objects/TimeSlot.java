@@ -130,7 +130,20 @@ public class TimeSlot
     }
 
     public void setPayment(String payment) {
-        this.payment = payment;
+        switch (payment) {
+            case "card":        this.payment = "Card";          break;
+            case "cash":        this.payment = "Cash";          break;
+            case "giftVoucher": this.payment = "Gift Voucher";  break;
+            case "free":        this.payment = "Free";          break;
+            default:            this.payment = "Other";         break;
+        }
+    }
+
+    public String getSQLFormat() {
+        if (this.hour < 10)
+            return "0" +this.hour + ":" + getStringMinute();
+        else
+            return this.hour + ":" + getStringMinute();
     }
 
     @Override

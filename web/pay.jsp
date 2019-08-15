@@ -16,71 +16,122 @@
     <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
 </head>
 <body>
-<%
-    ServletContext context = request.getServletContext();
-    TimeSlot ts = (TimeSlot) context.getAttribute("currentTimeSlot");
-%>
-<h1 class="text-center"> Pay for user <%= ts.getUser().getName()%></h1>
+    <%
+        ServletContext context = request.getServletContext();
+        TimeSlot ts = (TimeSlot) context.getAttribute("currentTimeSlot");
+    %>
+    <h1 class="text-center"> Pay for user <%= ts.getUser().getName()%></h1>
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-4">
-<form action="addToCart" method="post" class="cartItem">
-    Men's Haircut
-    <input type="checkbox" value="mensHaircut" name="cutType">
-    <br>
-    Men's Buzzcut
-    <input type="checkbox" value="mensBuzzcut" name="cutType">
-    <br>
-    Men's Fade
-    <input type="checkbox" value="mensFade" name="cutType">
-    <br>
-    Men's Beard
-    <input type="checkbox" value="mensBeard" name="cutType">
-    <br>
-    Ladies Haircut
-    <input type="checkbox" value="ladiesHaircut" name="cutType">
-    <br>
-    Boy's Cut
-    <input type="checkbox" value="boysCut" name="cutType">
-    <br>
-    Girl's Cut
-    <input type="checkbox" value="girlsCut" name="cutType">
-    <br>
-    Pension Cut
-    <input type="checkbox" value="pensionCut" name="cutType">
-    <input type="submit" name="Submit">
-</form>
+    <div class="container">
+        <div class="row">
+            <!--<form action="addToCart" method="post" class="cartItem" id="appointment-type">-->
+            <form class="cartItem" onclick="setCost()">
+                Men's Haircut
+                <input type="radio" value="mensHaircut" name="cutType">
+                <br>
+                Men's Buzzcut
+                <input type="radio" value="mensBuzzcut" name="cutType">
+                <br>
+                Men's Fade
+                <input type="radio" value="mensFade" name="cutType">
+                <br>
+                <!-- SEPARATE; and only give option if haircut type is MEN's
+                Men's Beard
+                <input type="radio" value="mensBeard" name="cutType">
+                <br>
+                -->
+                Ladies Haircut
+                <input type="radio" value="ladiesHaircut" name="cutType">
+                <br>
+                Boy's Cut
+                <input type="radio" value="boysCut" name="cutType">
+                <br>
+                Girl's Cut
+                <input type="radio" value="girlsCut" name="cutType">
+                <br>
+                Pension Cut
+                <input type="radio" value="pensionCut" name="cutType">
+                <input type="hidden" name="i" value="2">
+            </form>
 
+            <script>
+                function setCost() {
+                    var appType = getAppointmentType();
+                    document.getElementById("payment-value").value = getAppointmentCost(appType);
+
+                    // Update hidden field
+                    document.getElementById("appointment-type").value = appType;
+
+                    // **ADD**
+                    // Add additional field if men's haircut
+                    //var element = document.getElementById('shave-form');
+                    //if (appType.match("\bmens")) {
+                    // if (1 == 1) {
+                    //     element.classList.remove('hide');
+                    // }
+                    // else {
+                    //     if (!element.classList.contains('hide'))
+                    //         element.classList.add('hide');
+                    // }
+                }
+
+                // Only required if no submit button is used
+                function getAppointmentType() {
+                    var options = document.getElementsByName('cutType');
+                    for (var i=0; i < options.length; i++) {
+                        if (options[i].checked) {
+                            return options[i].value;
+                        }
+                    }
+                }
+
+                function getAppointmentCost(type) {
+                    switch (type) {
+                        case 'mensHaircut': return '28.00';
+                        case 'mensBuzzcut': return '20.00';
+                        case 'mensFade': return '20.00';
+                        //case 'mensBeard': return '18.00';
+                        case 'ladiesHaircut': return '28.00';
+                        case 'boysCut': return '20.00';
+                        case 'girlsCut': return '20.00';
+                        case 'pensionCut': return '23.00';
+                        default: return '0.00';
+                    }
+                }
+            </script>
         </div>
-        <div class="col-sm-4">
-    <table>
-    <th>Item & Price</th>
-<%
-    Cart c = (Cart) context.getAttribute("cart");
-    for (Item i : c.getCart()) {
-%>
-    <tr> <td> <%= i.toString()%> </td> </tr>
-<% } %>
-</table>
-<h4>Total is $<%=c.getTotal()%></h4>
+
+        <div id="shave-div" class="row">
+            <h4>Did client also receive a shave?</h4>
+            <form name="shave" onclick="addShave()">
+                Yes
+                <input type="radio" value="shaved" name="shave">
+                No
+                <input type="radio" value="notShaved" name="shave">
+            </form>
+            <script>
+                function addShave() {
+
+                }
+            </script>
         </div>
-        <div class="col-sm-4">
-<form action="checkout" method="post">
-    <select name="paymentType">
-        <option value="card">Card</option>
-        <option value="cash">Cash</option>
-        <option value="giftVoucher">Gift Voucher</option>
-        <option value="free">Free</option>
-    </select>
-    <br>
-    Modify Total
-    <input type="text" value="<%=c.getTotal()%>" name="paymentValue">
-    <br>
-    <input type="submit" name="Checkout">
-</form>
+
+        <div class="row">
+            <form action="checkout" method="post">
+                <select name="paymentType">
+                    <option value="card" selected>Card</option>
+                    <option value="cash">Cash</option>
+                    <option value="giftVoucher">Gift Voucher</option>
+                    <option value="free">Free</option>
+                </select>
+                <br>
+                Modify Total
+                <input id="payment-value" type="text" value="0.00" name="paymentValue">
+                <br>
+                <input id="appointment-type" name="appointmentType" type="hidden">
+                <input type="submit" name="Checkout" value="Checkout">
+            </form>
         </div>
     </div>
-</div>
 </body>
 </html>

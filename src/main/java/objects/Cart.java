@@ -14,33 +14,27 @@ public class Cart {
         this.cart.add(item);
     }
 
-    public void addCart(String itemName)
-    {
+    public void addCart(String itemName) { addCart(getItem(itemName)); }
+
+    public Item getItem(String itemName) {
         switch (itemName){
             case "mensHaircut" :
-                addCart(new Item("Men's Haircut", 28));
-                break;
+                return new Item("Men\'\'s Haircut", 28);
             case "mensBuzzcut" :
-                addCart(new Item("Men's Buzzcut", 20));
-                break;
+                return new Item("Men\'\'s Buzzcut", 20);
             case "mensFade" :
-                addCart(new Item("Men's Fade", 20));
-                break;
+                return new Item("Men\'\'s Fade", 20);
             case "mensBeard" :
-                addCart(new Item("Men's Beard", 18));
-                break;
+                return new Item("Men\'\'s Beard", 18);
             case "ladiesHaircut" :
-                addCart(new Item("Ladies Haircut", 28));
-                break;
+                return new Item("Ladies Haircut", 28);
             case "boysCut" :
-                addCart(new Item("Boy's Haircut", 20));
-                break;
+                return new Item("Boy\'\'s Haircut", 20);
             case "girlsCut" :
-                addCart(new Item("Girl's Haircut", 20));
-                break;
+                return new Item("Girl\'\'s Haircut", 20);
             case "pensionCut" :
-                addCart(new Item("Pensioner Haircut", 23));
-                break;
+                return new Item("Pensioner Haircut", 23);
+            default: return null;
         }
     }
 
