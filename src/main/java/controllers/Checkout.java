@@ -34,12 +34,6 @@ public class Checkout extends HttpServlet{
         boolean success = MySQLConnection.addPayment(date, ts.getUser().getName(), cart.getItem(request.getParameter("appointmentType")).getName(),
                 ts.getPayment(), ts.getPaymentValue());
 
-        if (success)
-            System.out.println("Worked");
-        else
-            System.out.println("Did not work");
-
-        //ts = (TimeSlot) context.getAttribute("currentTimeSlot");
         context.setAttribute("currentTimeSlot", ts);
         context.setAttribute("cart", new Cart());
         request.getRequestDispatcher("/index.jsp").forward(request,response);

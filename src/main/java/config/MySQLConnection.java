@@ -5,9 +5,9 @@ import java.sql.*;
 public class MySQLConnection {
 
     public static String getDB() {
-        String result = "";
+            String result = "";
         try{
-            //Class.forName("com.mysql.jdbc.Driver");
+//            Class.forName("com.mysql.jdbc.Driver");
 //            Connection con=DriverManager.getConnection(
 //                    "jdbc:mysql://google/analytics?cloudSqlInstance=clickk-quicklist:australia-southeast1:quicklist&amp;socketFactory=com.google.cloud.sql.mysql.SocketFactory&amp;useSSL=false", "root", "qaAnO30ANN46P5p9");
             Connection con=DriverManager.getConnection(
@@ -41,4 +41,22 @@ public class MySQLConnection {
         }
         return true;
     }
+
+//    public static boolean adminLogin(String username, String password) {
+//        try{
+////            Class.forName("com.mysql.jdbc.Driver");
+////            Connection con=DriverManager.getConnection(
+////                    "jdbc:mysql://google/analytics?cloudSqlInstance=clickk-quicklist:australia-southeast1:quicklist&amp;socketFactory=com.google.cloud.sql.mysql.SocketFactory&amp;useSSL=false", "root", "qaAnO30ANN46P5p9");
+//            Connection con=DriverManager.getConnection(
+//                    "jdbc:mysql://35.189.50.149/analytics", "root", "qaAnO30ANN46P5p9");
+//
+//            Statement stmt=con.createStatement();
+//            ResultSet rs=stmt.executeQuery("select * from admin where username=\'"
+//                    +username +"\' AND password=\'" +password +"\'");
+//            while(rs.next())
+//                return true;
+//            con.close();
+//        }catch(Exception e){ return false; }
+//        return false;
+//    }
 }

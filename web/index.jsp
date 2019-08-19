@@ -109,7 +109,7 @@
       <tr>
         <th>Time</th>
         <th>Name</th>
-        <th>Details</th>
+        <th>Options</th>
       </tr>
 
       <%
@@ -128,23 +128,31 @@
 
     <td>
       <%
-        if (timeSlotsUser[i].getPaymentValue() == 0)
-        {
+          if (!timeSlotsUser[i].getUser().getName().equals("")) {
+              if (timeSlotsUser[i].getPaymentValue() != 0) {
       %>
-      <form method="post" action="pay">
-        <input type="text" value="<%=i%>" name="i" hidden="true"></input>
-        <input type="submit" name="submit" value="Pay"></input>
-      </form>
-        <% }
-          else
-          { %>
+        <p class="name">
             Paid by <%=timeSlotsUser[i].getPayment()%> for $<%=timeSlotsUser[i].getPaymentValue()%>
+        </p>
+        <% } else { %>
+        <div class="container option-div">
+            <div class="row">
+                <div class="col">
+                    <form method="post" action="pay" class="no-margin-form">
+                        <input type="text" value="<%=i%>" name="i" hidden="true"></input>
+                        <input type="submit" name="submit" value="Pay" class="btn btn-success float-right btn-width-100"></input>
+                    </form>
+                </div>
+                <div class="col">
+                    <form method="post" action="deleteUser" class="no-margin-form">
+                        <input type="text" value="<%=i%>" name="i" hidden="true"></input>
+                        <input type="submit" name="submit" value="Delete" class="btn btn-danger float-left btn-width-100"></input>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <% }} %>
 
-         <% } %>
-        <form method="post" action="deleteUser">
-          <input type="text" value="<%=i%>" name="i" hidden="true"></input>
-          <input type="submit" name="submit" value="Delete"></input>
-        </form>
     </td>
       <%
       }
@@ -169,16 +177,12 @@
                 var timeslots = response["timeslots"];
 
                 for (i = 0; i < timeslots.length; i++) {
-                        document.getElementById("ts").rows[i + 1].cells[0].innerHTML = (timeslots[i]["time"]);
-                        document.getElementById("ts").rows[i + 1].cells[1].innerHTML = (timeslots[i]["name"]);
-
-                 // document.getElementById("ts").rows[i+1].cells[2].innerHTML = (timeslots[i]["details"]);
+                    document.getElementById("ts").rows[i + 1].cells[0].innerHTML = (timeslots[i]["time"]);
+                    document.getElementById("ts").rows[i + 1].cells[1].innerHTML = (timeslots[i]["name"]);
                 }
               });
     })();
   }
-
-
 
   $(document).ready(function() {
     setInterval(function () {

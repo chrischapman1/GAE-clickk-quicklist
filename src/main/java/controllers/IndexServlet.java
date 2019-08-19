@@ -1,44 +1,29 @@
 package controllers;
 
-import config.ConnectionPoolContextListener;
-import config.MySQLConnection;
-import objects.AdminUser;
-import objects.Day;
-import objects.TimeSlot;
-import objects.User;
-import beans.ListBean;
-
-import javax.servlet.*;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
-import javax.sql.DataSource;
-import java.io.*;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Logger;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
+@WebServlet(urlPatterns={"/IndexServlet"})
+public class IndexServlet extends HttpServlet {
 
-@WebServlet(urlPatterns={"/loginAdmin"})
-public class LoginAdmin extends HttpServlet{
+    private static final Logger LOGGER = Logger.getLogger(IndexServlet.class.getName());
 
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession sesh = request.getSession();
-        String username = request.getParameter("name");
-
-        //ServletContext context = request.getServletContext();
-        //if (adminUser.checkValid(request.getParameter("name"), request.getParameter("password")))
-//        if (MySQLConnection.adminLogin(username, request.getParameter("password")))
-//        {
-//            sesh.setAttribute("adminUser", new AdminUser(username));
-//        }
-//        request.getRequestDispatcher("/index.jsp").forward(request,response);
-
+    public void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException, ServletException {
         // Extract the pool from the Servlet Context, reusing the one that was created
         // in the ContextListener when the application was started
-        //DataSource pool = (DataSource) request.getServletContext().getAttribute("my-pool");
-        DataSource pool = ConnectionPoolContextListener.createConnectionPool();
+        DataSource pool = (DataSource) req.getServletContext().getAttribute("my-pool");
 
         boolean status = false;
         try (Connection conn = pool.getConnection()) {
@@ -62,12 +47,13 @@ public class LoginAdmin extends HttpServlet{
         }
 
         // Add variables and render the page
-        request.setAttribute("status", status);
-        request.getRequestDispatcher("/result.jsp").forward(request, response);
+        req.setAttribute("status", status);
+        req.getRequestDispatcher("/result.jsp").forward(req, resp);
     }
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException, ServletException {
+        doPost(req, resp);
     }
-
 }

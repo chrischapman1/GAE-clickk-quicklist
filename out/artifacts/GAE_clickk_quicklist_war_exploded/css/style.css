@@ -10,7 +10,7 @@ h1,h2,h3,h4,h5,h6
 
 .name, .name input
 {
-    font-size: 16pt;
+    font-family: 'Orbitron', sans-serif;
 }
 
 @font-face {font-family: "RefrigeratorDeluxeW01-Bold";
@@ -43,6 +43,10 @@ table {
     margin: 40px 0;
 }
 
+div.container.option-div {
+    width: auto;
+}
+
 .submit input
 {
     width: 200px;
@@ -61,4 +65,20 @@ table {
 
 .hide {
     display: none;
+}
+
+.btn-width-100 {
+    width: 100px;
+}
+
+form {
+    margin-block-end: 0;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+.option-div {
+
 }

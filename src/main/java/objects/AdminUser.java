@@ -3,23 +3,28 @@ package objects;
 import java.io.Serializable;
 
 public class AdminUser implements Serializable {
-    private String name = "a";
-    private String password = "a";
-    private boolean valid = false;
+    private String username;
+    private boolean valid;
 
-    public AdminUser() {}
-
-    public boolean checkValid(String name, String password)
-    {
-        if ((name.equals(this.name) && password.equals(this.password)))
-        {
-            valid = true;
-        }
-        return valid;
+    public AdminUser() {
+        this.username = "";
+        this.valid = false;
     }
 
-    public boolean isValid()
-    {
+    public AdminUser(String username) {
+        this.username = username;
+        this.valid = true;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public boolean isValid() {
         return valid;
     }
 }

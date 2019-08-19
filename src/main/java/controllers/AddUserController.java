@@ -42,9 +42,6 @@ public class AddUserController extends HttpServlet{
         String formattedDateMin = formatMin.format(new Date());
         int min  = Integer.parseInt(formattedDateMin);
 
-        // Test DB Connection
-        System.out.println(MySQLConnection.getDB());
-
         for (int i =0; i < timeSlots.length; i++)
         {
             if (timeSlots[i].getUser().getName().equals(""))
@@ -63,7 +60,8 @@ public class AddUserController extends HttpServlet{
     }
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/result.jsp").forward(request,response);
     }
 
 }

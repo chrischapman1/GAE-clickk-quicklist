@@ -29,6 +29,8 @@ public class TimeSlot
     {
         return "{ \"time\":\"" + ts.getHourMinute() + "\",\"name\":\""
                 + ts.getUser().getName() + "\",\"details\":\"" + ts.getUser().getPhoneemail() + "\"}";
+//        return "{ \"time\":\"" + ts.getSQLFormat() + "\",\"name\":\""
+//                + ts.getUser().getName() + "\",\"details\":\"" + ts.getUser().getPhoneemail() + "\"}";
     }
 
 
