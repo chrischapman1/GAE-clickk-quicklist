@@ -116,7 +116,18 @@ public class TimeSlot
 
     public String getHourMinute()
     {
-        return getDisplayHour() + " : " + getStringMinute();
+        if (this.hour < 12)
+            return getDisplayHour() + ":" + getStringMinute();
+        else
+            return getDisplayHour() + ":" + getStringMinute();
+    }
+
+    public String getTimeAMPM()
+    {
+        if (this.hour < 12)
+            return getDisplayHour() + ":" + getStringMinute() +" am";
+        else
+            return getDisplayHour() + ":" + getStringMinute() +" pm";
     }
 
     public float getPaymentValue() {

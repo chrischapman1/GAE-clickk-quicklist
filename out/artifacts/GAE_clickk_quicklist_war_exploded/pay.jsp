@@ -20,6 +20,9 @@
         ServletContext context = request.getServletContext();
         TimeSlot ts = (TimeSlot) context.getAttribute("currentTimeSlot");
     %>
+
+    <jsp:include page="/adminMenu.jsp" />
+
     <h1 class="text-center"> Pay for user <%= ts.getUser().getName()%></h1>
 
     <div class="container">

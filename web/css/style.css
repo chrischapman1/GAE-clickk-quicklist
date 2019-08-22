@@ -27,9 +27,25 @@ table {
 .home tr:nth-child(even) {background-image: linear-gradient(to right,  rgb(0, 35, 71) , #243b55) ; color: white; }
 .home  tr:nth-child(odd) {background: white ; color: #841d16;}
 
+#ts > tbody > tr:nth-child(even)
+{
+    background-image: linear-gradient(to right,  rgb(0, 35, 71) , #243b55) ; color: white;
+}
+
+#ts > tbody > tr:nth-child(odd)
+{
+    background: white ; color: #841d16;
+}
+
 .welcome, #ts, .addUser
 {
     text-align: center;
+}
+
+#ts
+{
+    width: 100%;
+    table-layout: fixed;
 }
 
 .max-width
@@ -51,6 +67,14 @@ div.container.option-div {
 {
     width: 200px;
     margin: 0 auto;
+}
+
+.font-theme
+{
+    font-family: 'Orbitron', sans-serif;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 30px;
 }
 
 .time
@@ -79,6 +103,25 @@ p {
     margin-bottom: 0;
 }
 
-.option-div {
+.navbar-nav.navbar-center {
+    position: absolute;
+    left: 50%;
+    transform: translatex(-50%);
+}
 
+.highlight-red {
+    color: #841d16;
+}
+
+.margin-right-10 {
+    margin-right: 10px;
+}
+
+.nav-header {
+    color: white !important;
+    font-weight: bold;
+}
+
+.margin-bottom-20 {
+    margin-bottom: 20px;
 }

@@ -33,22 +33,22 @@ public class ConnectionPoolContextListener implements ServletContextListener {
         // The configuration object specifies behaviors for the connection pool.
         HikariConfig config = new HikariConfig();
 
-        final String CLOUD_SQL_CONNECTION_NAME = "clickk-quicklist:australia-southeast1:test";
-        final String DB_USER = "root";
-        final String DB_PASS = "qaAnO30ANN46P5p9";
-        final String DB_NAME = "analytics";
+//        final String CLOUD_SQL_CONNECTION_NAME = "clickk-quicklist:australia-southeast1:test";
+//        final String DB_USER = "root";
+//        final String DB_PASS = "qaAnO30ANN46P5p9";
+//        final String DB_NAME = "analytics";
 
         // Configure which instance and what database user to connect with.
-        config.setJdbcUrl(String.format("jdbc:mysql://35.189.50.149/%s", DB_NAME));
-//        config.setJdbcUrl("jdbc:mysql://35.189.50.149/analytics?user=root&password=qaAnO30ANN46P5p9");
-        config.setUsername(DB_USER); // e.g. "root", "postgres"
-        config.setPassword(DB_PASS); // e.g. "my-password"
+//        config.setJdbcUrl(String.format("jdbc:mysql://35.189.50.149/%s", DB_NAME));
+        config.setJdbcUrl("jdbc:mysql://35.189.50.149/analytics?user=root&password=qaAnO30ANN46P5p9");
+//        config.setUsername(DB_USER); // e.g. "root", "postgres"
+//        config.setPassword(DB_PASS); // e.g. "my-password"
 
         // For Java users, the Cloud SQL JDBC Socket Factory can provide authenticated connections.
         // See https://github.com/GoogleCloudPlatform/cloud-sql-jdbc-socket-factory for details.
-        config.addDataSourceProperty("socketFactory", "com.google.cloud.sql.mysql.SocketFactory");
-        config.addDataSourceProperty("cloudSqlInstance", CLOUD_SQL_CONNECTION_NAME);
-        config.addDataSourceProperty("useSSL", "false");
+//        config.addDataSourceProperty("socketFactory", "com.google.cloud.sql.mysql.SocketFactory");
+//        config.addDataSourceProperty("cloudSqlInstance", CLOUD_SQL_CONNECTION_NAME);
+//        config.addDataSourceProperty("useSSL", "false");
 
         // ... Specify additional connection properties here.
         // [START_EXCLUDE]
