@@ -23,64 +23,54 @@
 
     <jsp:include page="/adminMenu.jsp" />
 
-    <h1 class="text-center"> Pay for user <%= ts.getUser().getName()%></h1>
+    <h1 class="text-center margin-top-40 margin-bottom-20"> Payment - Client: <%= ts.getUser().getName()%></h1>
 
     <div class="container">
-        <div class="row">
+        <div class="row justify-content-center width-100 form-group">
             <!--<form action="addToCart" method="post" class="cartItem" id="appointment-type">-->
-            <form class="cartItem" onclick="setCost()">
-                Men's Haircut
-                <input type="radio" value="mensHaircut" name="cutType">
-                <br>
-                Men's Buzzcut
-                <input type="radio" value="mensBuzzcut" name="cutType">
-                <br>
-                Men's Fade
-                <input type="radio" value="mensFade" name="cutType">
-                <br>
-                <!-- SEPARATE; and only give option if haircut type is MEN's
-                Men's Beard
-                <input type="radio" value="mensBeard" name="cutType">
-                <br>
-                -->
-                Ladies Haircut
-                <input type="radio" value="ladiesHaircut" name="cutType">
-                <br>
-                Boy's Cut
-                <input type="radio" value="boysCut" name="cutType">
-                <br>
-                Girl's Cut
-                <input type="radio" value="girlsCut" name="cutType">
-                <br>
-                Pension Cut
-                <input type="radio" value="pensionCut" name="cutType">
+            <form onclick="setCost()">
+                <label for="appointmentType">Appointment Type</label>
+                <select class="form-control" id="appointmentType">
+                    <option value="" selected disabled hidden>--</option>
+                    <option value="mensHaircut">Men's Haircut</option>
+                    <option value="mensBuzzcut">Men's Buzzcut</option>
+                    <option value="mensFade">Men's Fade</option>
+                    <option value="ladiesHaircut">Lady's Haircut</option>
+                    <option value="boysCut">Boy's Cut</option>
+                    <option value="girlsCut">Girl's Cut</option>
+                    <option value="pensionCut">Pension Cut</option>
+                </select>
                 <input type="hidden" name="i" value="2">
             </form>
 
             <script>
                 function setCost() {
-                    var appType = getAppointmentType();
-                    document.getElementById("payment-value").value = getAppointmentCost(appType);
+                    var typeElement = document.getElementById("paymentType");
+                    if (typeElement.options[typeElement.selectedIndex].value != "free") {
+                        var typeElement = document.getElementById("appointmentType");
+                        var appType = typeElement.options[typeElement.selectedIndex].value;
+                        document.getElementById("payment-value").value = getAppointmentCost(appType).toFixed(2);
 
-                    // Update hidden field
-                    document.getElementById("appointment-type").value = appType;
+                        // Update hidden field
+                        document.getElementById("appointment-type").value = appType;
 
-                    // **ADD**
-                    // Add additional field if men's haircut
-                    //var element = document.getElementById('shave-form');
-                    //if (appType.match("\bmens")) {
-                    // if (1 == 1) {
-                    //     element.classList.remove('hide');
-                    // }
-                    // else {
-                    //     if (!element.classList.contains('hide'))
-                    //         element.classList.add('hide');
-                    // }
+                        // Give option of adding a shave if man's appointment
+                        var element = document.getElementById("shave-div");
+                        if (/\bmens/.test(appType)) {
+                            if (element.classList.contains("hide")) {
+                                element.classList.remove("hide");
+                            }
+                        } else {
+                            if (!element.classList.contains("hide")) {
+                                element.classList.add("hide");
+                            }
+                        }
+                    }
                 }
 
-                // Only required if no submit button is used
-                function getAppointmentType() {
-                    var options = document.getElementsByName('cutType');
+                // Get value of radio button given name
+                function getRadioValue(name) {
+                    var options = document.getElementsByName(name);
                     for (var i=0; i < options.length; i++) {
                         if (options[i].checked) {
                             return options[i].value;
@@ -90,50 +80,103 @@
 
                 function getAppointmentCost(type) {
                     switch (type) {
-                        case 'mensHaircut': return '28.00';
-                        case 'mensBuzzcut': return '20.00';
-                        case 'mensFade': return '20.00';
+                        case 'mensHaircut': return 28.0;
+                        case 'mensBuzzcut': return 20.0;
+                        case 'mensFade': return 20.0;
                         //case 'mensBeard': return '18.00';
-                        case 'ladiesHaircut': return '28.00';
-                        case 'boysCut': return '20.00';
-                        case 'girlsCut': return '20.00';
-                        case 'pensionCut': return '23.00';
-                        default: return '0.00';
+                        case 'ladiesHaircut': return 28.0;
+                        case 'boysCut': return 20.0;
+                        case 'girlsCut': return 20.0;
+                        case 'pensionCut': return 23.0;
+                        default: return 0.0;
                     }
                 }
             </script>
         </div>
 
-        <div id="shave-div" class="row">
-            <h4>Did client also receive a shave?</h4>
-            <form name="shave" onclick="addShave()">
-                Yes
-                <input type="radio" value="shaved" name="shave">
-                No
-                <input type="radio" value="notShaved" name="shave">
+        <div id="shave-div" class="row justify-content-center form-group hide">
+            <hr>
+            <form onclick="addShave()">
+                <div class="form-group">
+                    <p class="shave-title">Did client also receive a shave?</p>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="shaven-radio" name="shave" value="shaved">
+                    <label class="form-check-label" for="shaven-radio">Yes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="unshaven-radio" name="shave" value="notShaved" checked>
+                    <label class="form-check-label" for="unshaven-radio">No</label>
+                </div>
             </form>
+            <hr>
+
             <script>
                 function addShave() {
+                    var element = document.getElementById("payment-value");
+                    var total = parseFloat(element.value);
 
+                    if (getRadioValue("shave") == "shaved") {
+                        if (total <= 28.00) {
+                            total += 18.0;
+                        }
+                    } else {
+                        if (total >= 38.0) {
+                            total -= 18.0;
+                        }
+                    }
+
+                    element.value = total.toFixed(2);
                 }
             </script>
         </div>
 
-        <div class="row">
+        <div class="row justify-content-center">
             <form action="checkout" method="post">
-                <select name="paymentType">
-                    <option value="card" selected>Card</option>
-                    <option value="cash">Cash</option>
-                    <option value="giftVoucher">Gift Voucher</option>
-                    <option value="free">Free</option>
-                </select>
-                <br>
-                Modify Total
-                <input id="payment-value" type="text" value="0.00" name="paymentValue">
-                <br>
-                <input id="appointment-type" name="appointmentType" type="hidden">
-                <input type="submit" name="Checkout" value="Checkout">
+                <div class="form-group">
+                    <label for="paymentType">Payment Type</label>
+                    <select class="form-control" id="paymentType" onclick="checkFree()">
+                        <option value="" selected disabled hidden>--</option>
+                        <option value="card">Card</option>
+                        <option value="cash">Cash</option>
+                        <option value="giftVoucher">Gift Voucher</option>
+                        <option value="free">Free</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="payment-value">Modify Total $</label>
+                    <input id="payment-value" type="number" value="0.00" step="0.01" name="paymentValue" class="form-control">
+                </div>
+                <div class="form-group justify-content-center">
+                    <input id="appointment-type" name="appointmentType" type="hidden">
+                    <input type="submit" name="Checkout" value="Checkout" class="btn btn-danger width-100">
+                </div>
             </form>
+
+            <script>
+                function checkFree() {
+                    var paymentElement = document.getElementById("payment-value");
+                    var payment = parseFloat(paymentElement.value);
+
+                    var typeElement = document.getElementById("paymentType");
+                    if (typeElement.options[typeElement.selectedIndex].value == "free") {
+                        payment = 0.0;
+                        paymentElement.value = payment.toFixed(2);
+                    } else {
+                        if (payment == 0.0) {
+                            var typeElement = document.getElementById("appointmentType");
+                            var appType = typeElement.options[typeElement.selectedIndex].value;
+                            payment = getAppointmentCost(appType);
+                            paymentElement.value = payment.toFixed(2);
+
+                            // Check for shave
+                            if (/\bmens/.test(appType)) {
+                                addShave();
+                            }
+                        }
+                    }
+                }
+            </script>
         </div>
     </div>
 </body>

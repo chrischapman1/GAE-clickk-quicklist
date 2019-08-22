@@ -60,7 +60,7 @@ public class Day {
             if (timeSlots[i].getUser().getName().equals(""))
             {
                 if ((hour < timeSlots[i].getHour()) || ((hour == timeSlots[i].getHour()) && (min < timeSlots[i].getMinute()))) {
-                    return timeSlots[i].getHourMinute();
+                    return timeSlots[i].getTimeAMPM();
                 }
 
             }
