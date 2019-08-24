@@ -21,7 +21,7 @@ public class Checkout extends HttpServlet{
         ServletContext context = request.getServletContext();
         TimeSlot ts = (TimeSlot) context.getAttribute("currentTimeSlot");
         ts.setPayment(request.getParameter("paymentType"));
-        ts.setPaymentValue(Float.valueOf(request.getParameter("paymentValue")));
+        ts.setPaymentValue(Float.parseFloat(request.getParameter("paymentValue")));
 
         Cart cart = (Cart) context.getAttribute("cart");
 
@@ -30,13 +30,18 @@ public class Checkout extends HttpServlet{
         long millis = System.currentTimeMillis();
         Date currentDate = new Date(millis);
 
+        boolean shaved = request.getParameter("shave").equals("shaved");
+        String appointmentType = cart.getItem(request.getParameter("appointmentType")).getName();
+        if (shaved)
+            appointmentType += " + Shave";
+
         String date = currentDate.toString() +" " +ts.getSQLFormat() +":00";
-        boolean success = MySQLConnection.addPayment(date, ts.getUser().getName(), cart.getItem(request.getParameter("appointmentType")).getName(),
-                ts.getPayment(), ts.getPaymentValue());
+//        boolean success = MySQLConnection.addPayment(date, request.getParameter("nameInput"), appointmentType,
+//                ts.getPayment(), ts.getPaymentValue());
 
         context.setAttribute("currentTimeSlot", ts);
         context.setAttribute("cart", new Cart());
-        request.getRequestDispatcher("/index.jsp").forward(request,response);
+        request.getRequestDispatcher("/adminView.jsp").forward(request,response);
     }
 
     @Override

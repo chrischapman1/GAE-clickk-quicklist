@@ -67,17 +67,63 @@
         <% for (int i=0; i < timeSlotsClient.length; i++) { %>
         <% if (hour < timeSlotsClient[i].getHour() || (hour == timeSlotsClient[i].getHour() && min < timeSlotsClient[i].getMinute())) { %>
         <tr>
-            <td class="time">
-                <%= timeSlotsClient[i].getHour() %> : <%= timeSlotsClient[i].getStringMinute() %>
-            </td>
-            <td class="name">
-                <%= timeSlotsClient[i].getUser().getName() %>
-            </td>
+            <td class="time"></td>
+            <td class="name"></td>
         </tr>
         <% } %>
         <% } %>
     </table>
 </div>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+    function refreshTable() {
+        (function () {
+            // var timeSlotsJson = "https://clickk-quicklist.appspot.com/currentTimeSlot";
+            var timeSlotsJson = "http://localhost:8080/currentTimeSlot";
+            $.getJSON(timeSlotsJson)
+                .done(function (response) {
+
+                    var timeslots = response["timeslots"];
+                    // Variables for current time
+                    var today = new Date();
+                    var hour = today.getHours();
+                    var min = today.getMinutes();
+
+                    var startIndex = 0;
+                    for (var i = 0; i < timeslots.length; i++) {
+                        var tsTime = timeslots[i]["time"].split(":");
+                        var tsHour = parseInt(tsTime[0], 10);
+                        var tsMin = parseInt(tsTime[1], 10);
+
+                        if (tsTime[0] <= 5) {
+                            tsTime[0] += 12;
+                        }
+
+                        if (hour < tsHour || (hour == tsHour && min < tsMin)) {
+                            break;
+                        } else {
+                            startIndex += 1;
+                        }
+                    }
+
+                    for (var i = 0; i < timeslots.length; i++) {
+                        document.getElementById("ts").rows[i + 1].cells[0].innerHTML = (timeslots[startIndex]["time"]);
+                        document.getElementById("ts").rows[i + 1].cells[1].innerHTML = (timeslots[startIndex]["name"]);
+                        startIndex += 1;
+                    }
+                });
+        })();
+    }
+
+    $(document).ready(function() {
+        refreshTable();
+
+        setInterval(function () {
+            refreshTable();
+        }, 5000);
+    });
+</script>
 
 </body>
 </html>

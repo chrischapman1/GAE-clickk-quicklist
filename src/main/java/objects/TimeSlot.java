@@ -134,6 +134,10 @@ public class TimeSlot
         return paymentValue;
     }
 
+    public String getPaymentDollar() {
+        return String.format("%.2f", this.paymentValue);
+    }
+
     public void setPaymentValue(float paymentValue) {
         this.paymentValue = paymentValue;
     }

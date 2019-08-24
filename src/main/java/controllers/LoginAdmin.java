@@ -29,10 +29,10 @@ public class LoginAdmin extends HttpServlet{
 
         //ServletContext context = request.getServletContext();
         //if (adminUser.checkValid(request.getParameter("name"), request.getParameter("password")))
-        if (MySQLConnection.adminLogin(username, request.getParameter("password")))
-        {
+//        if (MySQLConnection.adminLogin(username, request.getParameter("password")))
+//        {
             sesh.setAttribute("adminUser", new AdminUser(username));
-        }
+//        }
         request.getRequestDispatcher("/adminView.jsp").forward(request,response);
 
 //        // Extract the pool from the Servlet Context, reusing the one that was created

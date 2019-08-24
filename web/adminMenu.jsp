@@ -19,13 +19,13 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav navbar-center">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="./adminView.jsp">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Make Payment</a>
+                <a class="nav-link" href=/pay.jsp?nameParameter=none">Make Payment</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Adjust Times</a>
+                <a class="nav-link" href="/modifyTimes.jsp">Adjust Times</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/logoutAdmin">Logout, <%= adminUser.getUsername() %></a>

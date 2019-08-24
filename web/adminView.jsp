@@ -47,7 +47,7 @@
         <% for (int i=0; i < timeSlotsClient.length; i++) { %>
             <tr>
                 <td class="time">
-                    <%= timeSlotsClient[i].getDisplayHour() %> : <%= timeSlotsClient[i].getStringMinute() %>
+                    <%= timeSlotsClient[i].getDisplayHour() %>:<%= timeSlotsClient[i].getStringMinute() %>
                 </td>
                 <td class="name">
                     <%= timeSlotsClient[i].getUser().getName() %>
@@ -58,7 +58,7 @@
                             if (timeSlotsUser[i].getPaymentValue() != 0) {
                     %>
                     <p class="name">
-                        Paid by <%=timeSlotsUser[i].getPayment()%> for $<%=timeSlotsUser[i].getPaymentValue()%>
+                        Paid by <%=timeSlotsUser[i].getPayment()%> for $<%=timeSlotsUser[i].getPaymentDollar()%>
                     </p>
                     <%      } else { %>
                     <div class="container option-div">
@@ -89,7 +89,7 @@
     function refreshTable()
     {
         (function() {
-            //var timeSlotsJson = "https://clickk-quicklist.appspot.com/currentTimeSlot";
+            // var timeSlotsJson = "https://clickk-quicklist.appspot.com/currentTimeSlot";
             var timeSlotsJson = "http://localhost:8080/currentTimeSlot";
             $.getJSON(timeSlotsJson)
                 .done(function (response) {

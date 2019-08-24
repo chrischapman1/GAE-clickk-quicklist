@@ -17,8 +17,8 @@ public class ModifyTime extends HttpServlet{
         ServletContext context = request.getServletContext();
         Day day = (Day) context.getAttribute("day");
         TimeSlot[] timeSlots = day.getTimeSlots(false);
-        int timePeriod = Integer.valueOf(request.getParameter("timePeriod"));
-        boolean isAdd = Boolean.valueOf(request.getParameter("isAdd"));
+        int timePeriod = Integer.valueOf(request.getParameter("timeValue"));
+        boolean isAdd = request.getParameter("modifyType").equals("add");
 
         if (isAdd)
         {
@@ -36,7 +36,7 @@ public class ModifyTime extends HttpServlet{
         }
 
         context.setAttribute("day", day);
-        request.getRequestDispatcher("/index.jsp").forward(request,response);
+        request.getRequestDispatcher("/adminView.jsp").forward(request,response);
     }
 
     @Override

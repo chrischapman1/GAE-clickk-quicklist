@@ -7,6 +7,7 @@ public class Day {
 
     private TimeSlot[] timeSlots;
     private boolean isWeekend;
+
     public TimeSlot[] getTimeSlots(boolean isClient) {
         if (!(isClient))
         {
