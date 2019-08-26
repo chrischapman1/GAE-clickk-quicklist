@@ -37,14 +37,20 @@
 <h1 class="font-theme">Quicklist Admin</h1>
 
 <div class="container">
-    <table id="ts">
-        <tr>
-            <th>Time</th>
-            <th>Name</th>
-            <th>Options</th>
-        </tr>
+    <div class="row justify-content-center">
+        <form method="get" action="/closeDay">
+            <input type="submit" value="Close Day" class="btn btn-danger" />
+        </form>
+    </div>
+    <div>
+        <table id="ts">
+            <tr>
+                <th>Time</th>
+                <th>Name</th>
+                <th>Options</th>
+            </tr>
 
-        <% for (int i=0; i < timeSlotsClient.length; i++) { %>
+            <% for (int i=0; i < timeSlotsClient.length; i++) { %>
             <tr>
                 <td class="time">
                     <%= timeSlotsClient[i].getDisplayHour() %>:<%= timeSlotsClient[i].getStringMinute() %>
@@ -80,8 +86,10 @@
                     <%      }} %>
                 </td>
             </tr>
-        <% } %>
-    </table>
+            <% } %>
+        </table>
+    </div>
+
 </div>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

@@ -19,21 +19,38 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-@WebServlet(urlPatterns={"/loginAdmin"})
+@WebServlet(urlPatterns={"/admin"})
 public class LoginAdmin extends HttpServlet{
 
     @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/adminLogin.jsp").forward(request, response);
+    }
+
+    @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        final String user = "admin";
+        final String pass = "n3wLime70";
+
         HttpSession sesh = request.getSession();
-        String username = request.getParameter("name");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        if (username.equals(user) && password.equals(pass)) {
+            sesh.setAttribute("adminUser", new AdminUser(username));
+            request.getRequestDispatcher("/adminView.jsp").forward(request,response);
+        } else {
+            request.getRequestDispatcher("/adminLogin.jsp?status=failed").forward(request, response);
+        }
+
+
 
         //ServletContext context = request.getServletContext();
         //if (adminUser.checkValid(request.getParameter("name"), request.getParameter("password")))
 //        if (MySQLConnection.adminLogin(username, request.getParameter("password")))
 //        {
-            sesh.setAttribute("adminUser", new AdminUser(username));
+//            sesh.setAttribute("adminUser", new AdminUser(username));
 //        }
-        request.getRequestDispatcher("/adminView.jsp").forward(request,response);
 
 //        // Extract the pool from the Servlet Context, reusing the one that was created
 //        // in the ContextListener when the application was started
@@ -65,9 +82,4 @@ public class LoginAdmin extends HttpServlet{
 //        request.setAttribute("status", status);
 //        request.getRequestDispatcher("/result.jsp").forward(request, response);
     }
-
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) {
-    }
-
 }

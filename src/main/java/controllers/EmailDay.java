@@ -1,6 +1,9 @@
 package controllers;
 
 import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
+import config.email.BaeldungSendEmail;
+import config.email.JavatPointEmail;
+import config.email.SendEmailSMTP;
 import objects.AdminUser;
 import objects.Day;
 import objects.TimeSlot;
@@ -24,10 +27,14 @@ public class EmailDay extends HttpServlet{
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ServletContext context = request.getServletContext();
-        String takings = (String) context.getAttribute("dayTakings");
-
-        emailTakings(takings);
+//        ServletContext context = request.getServletContext();
+//        String takings = (String) context.getAttribute("dayTakings");
+//
+//        emailTakings(takings);
+//
+        SendEmailSMTP.sendEmail();
+//        BaeldungSendEmail.sendEmail();
+//        JavatPointEmail.SendMailBySite();
 
         request.getRequestDispatcher("/index.jsp").forward(request,response);
     }

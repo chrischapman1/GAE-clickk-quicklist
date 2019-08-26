@@ -17,11 +17,14 @@ public class CloseDay extends HttpServlet{
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ServletContext context = request.getServletContext();
+
         request.getRequestDispatcher("/closeDay.jsp").forward(request,response);
     }
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doPost(request, response);
     }
 
 }

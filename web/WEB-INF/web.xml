@@ -10,17 +10,25 @@
         </listener-class>
     </listener>
 
+    <display-name>admin</display-name>
+    <servlet>
+        <servlet-name>LoginAdmin</servlet-name>
+        <servlet-class>controllers.LoginAdmin</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginAdmin</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+
     <display-name>addUser</display-name>
-       <servlet>
-            <servlet-name>addUser</servlet-name>
-            <servlet-class>controllers.AddUserController</servlet-class>
-        </servlet>
-       <servlet-mapping>
-           <servlet-name>addUser</servlet-name>
-             <url-pattern>/addUser</url-pattern>
-        </servlet-mapping>
-
-
+    <servlet>
+        <servlet-name>addUser</servlet-name>
+        <servlet-class>controllers.AddUserController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addUser</servlet-name>
+        <url-pattern>/addUser</url-pattern>
+    </servlet-mapping>
 
     <display-name>loginAdmin</display-name>
     <servlet>
@@ -32,7 +40,6 @@
         <url-pattern>/loginAdmin</url-pattern>
     </servlet-mapping>
 
-
     <display-name>deleteUser</display-name>
     <servlet>
         <servlet-name>deleteUser</servlet-name>
@@ -42,7 +49,6 @@
         <servlet-name>deleteUser</servlet-name>
         <url-pattern>/deleteUser</url-pattern>
     </servlet-mapping>
-
 
     <display-name>closeDay</display-name>
     <servlet>
@@ -74,7 +80,6 @@
         <url-pattern>/checkout</url-pattern>
     </servlet-mapping>
 
-
     <display-name>newDay</display-name>
     <servlet>
         <servlet-name>newDay</servlet-name>
@@ -104,7 +109,6 @@
         <servlet-name>openDay</servlet-name>
         <url-pattern>/openDay</url-pattern>
     </servlet-mapping>
-
 
     <display-name>modifyTime</display-name>
     <servlet>
@@ -136,6 +140,15 @@
         <url-pattern>/addToCart</url-pattern>
     </servlet-mapping>
 
+    <display-name>emailDay</display-name>
+    <servlet>
+        <servlet-name>EmailDay</servlet-name>
+        <servlet-class>controllers.EmailDay</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EmailDay</servlet-name>
+        <url-pattern>/emailDay</url-pattern>
+    </servlet-mapping>
 
 </web-app>
 

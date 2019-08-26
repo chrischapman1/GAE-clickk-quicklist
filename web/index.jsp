@@ -18,18 +18,6 @@
   <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
 </head>
 <body class="welcome">
-
-<nav class="navbar navbar-dark bg-dark justify-content-between">
-    <a class="navbar-brand nav-header">Admin Login</a>
-    <form method="post" action="loginAdmin" class="form-inline">
-        <input name="name" class="form-control mr-sm-2" type="text" placeholder="Username" aria-label="Search" required>
-        <input name="password" class="form-control mr-sm-2" type="password" placeholder="Password" aria-label="Search" required>
-        <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Login</button>
-    </form>
-</nav>
-
-<h1 class="font-theme">Welcome to the <span class="highlight-red">Quicklist</span></h1>
-
 <%
     ServletContext context = request.getServletContext();
     Day day = (Day) context.getAttribute("day");
@@ -41,11 +29,21 @@
     LocalTime time = LocalTime.now();
     int hour = time.getHour();
     int min = time.getMinute();
+
+    // For GAE server - time is UTC+0 (need to add 10 hours)
+    //hour += 10;
 %>
 
 <div class="container">
+    <div class="row justify-content-center background-black">
+        <h1 class="font-theme font-white">Welcome to the <span class="highlight-red">Quicklist</span></h1>
+    </div>
+
     <div class="row justify-content-center">
-        <h2 class="margin-bottom-20">Next available time slot -  <%= day.getNextAvailableTime() %></h2>
+        <h2 class="font-theme">Next available time...</h2>
+    </div>
+    <div class="row justify-content-center">
+        <h2 class="font-theme-no-margin highlight-red margin-bottom-40"><%= day.getNextAvailableTime() %></h2>
     </div>
     <div class="row justify-content-center margin-bottom-20">
         <form method="post" action="addUser" class="form-inline">
@@ -56,23 +54,6 @@
             <button type="submit" class="btn btn-danger">Join Queue</button>
         </form>
     </div>
-</div>
-
-<div class="container">
-    <table id="ts">
-        <tr>
-            <th class="time">Time</th>
-            <th class="name">Name</th>
-        </tr>
-        <% for (int i=0; i < timeSlotsClient.length; i++) { %>
-        <% if (hour < timeSlotsClient[i].getHour() || (hour == timeSlotsClient[i].getHour() && min < timeSlotsClient[i].getMinute())) { %>
-        <tr>
-            <td class="time"></td>
-            <td class="name"></td>
-        </tr>
-        <% } %>
-        <% } %>
-    </table>
 </div>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -89,7 +70,7 @@
                     var today = new Date();
                     var hour = today.getHours();
                     var min = today.getMinutes();
-
+                    var amPm = "am";
                     var startIndex = 0;
                     for (var i = 0; i < timeslots.length; i++) {
                         var tsTime = timeslots[i]["time"].split(":");
@@ -98,6 +79,7 @@
 
                         if (tsTime[0] <= 5) {
                             tsTime[0] += 12;
+                            amPm = "pm"
                         }
 
                         if (hour < tsHour || (hour == tsHour && min < tsMin)) {
@@ -107,22 +89,17 @@
                         }
                     }
 
-                    for (var i = 0; i < timeslots.length; i++) {
-                        document.getElementById("ts").rows[i + 1].cells[0].innerHTML = (timeslots[startIndex]["time"]);
-                        document.getElementById("ts").rows[i + 1].cells[1].innerHTML = (timeslots[startIndex]["name"]);
-                        startIndex += 1;
-                    }
+                    document.getElementById("span-available").textContent = timeslots[startIndex]["time"] +" " +amPm;
                 });
         })();
     }
 
-    $(document).ready(function() {
-        refreshTable();
-
-        setInterval(function () {
-            refreshTable();
-        }, 5000);
-    });
+    // $(document).ready(function() {
+    //     refreshTable();
+    //     setInterval(function () {
+    //         refreshTable();
+    //     }, 5000);
+    // });
 </script>
 
 </body>

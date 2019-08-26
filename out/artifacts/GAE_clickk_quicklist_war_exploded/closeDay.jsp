@@ -27,39 +27,43 @@
     <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
 </head>
 <body>
-<h1>Close Day</h1>
-
     <%
-    ServletContext context = request.getServletContext();
-    Day day = (Day) context.getAttribute("day");
-    TimeSlot[] current = day.getTimeSlots(false);
-    int cash = 0, card = 0, giftvoucher = 0, free = 0;
-    for (int i=0; i < current.length; i++)
-    {
-        if (current[i].getPayment().equals("cash"))
-            cash += current[i].getPaymentValue();
-        else if (current[i].getPayment().equals("card"))
-            card += current[i].getPaymentValue();
-        else if (current[i].getPayment().equals("giftVoucher"))
-            giftvoucher += current[i].getPaymentValue();
-        else if (current[i].getPayment().equals("free"))
-            free += current[i].getPaymentValue();
-    }
-    String takings = "Card: " + card + "Cash: " + cash + "Gift Voucher: " + giftvoucher + "Free: " + free;
-    context.setAttribute("dayTakings", takings);
+//    ServletContext context = request.getServletContext();
+//    Day day = (Day) context.getAttribute("day");
+//    TimeSlot[] current = day.getTimeSlots(false);
+//    int cash = 0, card = 0, giftvoucher = 0, free = 0;
+//    for (int i=0; i < current.length; i++)
+//    {
+//        if (current[i].getPayment().equals("cash"))
+//            cash += current[i].getPaymentValue();
+//        else if (current[i].getPayment().equals("card"))
+//            card += current[i].getPaymentValue();
+//        else if (current[i].getPayment().equals("giftVoucher"))
+//            giftvoucher += current[i].getPaymentValue();
+//        else if (current[i].getPayment().equals("free"))
+//            free += current[i].getPaymentValue();
+//    }
+//    String takings = "Card: " + card + "Cash: " + cash + "Gift Voucher: " + giftvoucher + "Free: " + free;
+//    context.setAttribute("dayTakings", takings);
     %>
-    Card: $<%=card%> <br>
-    Cash: $<%=cash%> <br>
-    Gift Voucher: $<%=giftvoucher%> <br>
-    Free: $<%=free%>
 
+    <div class="container justify-content-center">
+        <div class="row">
+            <h1 class="font-theme">Close Day</h1>
+        </div>
+        <div class="row">
+            <div class="col">
+                <form method="post" action="emailDay">
+                    <input type="submit" name="submit" value="Email Day" class="btn btn-danger">
+                </form>
+            </div>
+            <div class="col">
+                <form method="post" action="newDay">
+                    <input type="submit" name="submit" value="Close Day" class="btn btn-danger">
+                </form>
+            </div>
+        </div>
+    </div>
 
-    <form method="post" action="emailDay">
-        <input type="submit" name="submit" value="Email Day"></input>
-    </form>
-
-    <form method="post" action="newDay">
-        <input type="submit" name="submit" value="Close Day"></input>
-    </form>
 </body>
 </html>
