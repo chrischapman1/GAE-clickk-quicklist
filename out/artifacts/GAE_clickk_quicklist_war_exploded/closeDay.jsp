@@ -28,40 +28,43 @@
 </head>
 <body>
     <%
-//    ServletContext context = request.getServletContext();
-//    Day day = (Day) context.getAttribute("day");
-//    TimeSlot[] current = day.getTimeSlots(false);
-//    int cash = 0, card = 0, giftvoucher = 0, free = 0;
-//    for (int i=0; i < current.length; i++)
-//    {
-//        if (current[i].getPayment().equals("cash"))
-//            cash += current[i].getPaymentValue();
-//        else if (current[i].getPayment().equals("card"))
-//            card += current[i].getPaymentValue();
-//        else if (current[i].getPayment().equals("giftVoucher"))
-//            giftvoucher += current[i].getPaymentValue();
-//        else if (current[i].getPayment().equals("free"))
-//            free += current[i].getPaymentValue();
-//    }
-//    String takings = "Card: " + card + "Cash: " + cash + "Gift Voucher: " + giftvoucher + "Free: " + free;
-//    context.setAttribute("dayTakings", takings);
+    ServletContext context = request.getServletContext();
+    Day day = (Day) context.getAttribute("day");
+    TimeSlot[] current = day.getTimeSlots(false);
+    int cash = 0, card = 0, giftvoucher = 0, free = 0;
+    for (int i=0; i < current.length; i++)
+    {
+        if (current[i].getPayment().equals("cash"))
+            cash += current[i].getPaymentValue();
+        else if (current[i].getPayment().equals("card"))
+            card += current[i].getPaymentValue();
+        else if (current[i].getPayment().equals("giftVoucher"))
+            giftvoucher += current[i].getPaymentValue();
+        else if (current[i].getPayment().equals("free"))
+            free += current[i].getPaymentValue();
+    }
+    String takings = "Card: " + card + "Cash: " + cash + "Gift Voucher: " + giftvoucher + "Free: " + free;
+    context.setAttribute("dayTakings", takings);
     %>
 
-    <div class="container justify-content-center">
-        <div class="row">
+    <jsp:include page="adminMenu.jsp" />
+
+    <div class="container">
+        <div class="row justify-content-center">
             <h1 class="font-theme">Close Day</h1>
         </div>
-        <div class="row">
-            <div class="col">
-                <form method="post" action="emailDay">
-                    <input type="submit" name="submit" value="Email Day" class="btn btn-danger">
-                </form>
-            </div>
-            <div class="col">
-                <form method="post" action="newDay">
-                    <input type="submit" name="submit" value="Close Day" class="btn btn-danger">
-                </form>
-            </div>
+        <div class="row justify-content-center">
+            <p>
+                Cash: $<%=cash%>, Card: $<%=card%>, Gift Voucher: $<%=giftvoucher%>, Free: $<%=free%>
+            </p>
+        </div>
+        <div class="row justify-content-center">
+            <form id="email-form-btn" method="post" action="emailDay">
+                <input type="submit" name="submit" value="Email Day" class="btn btn-danger">
+            </form>
+            <form id="close-form-btn" method="post" action="newDay">
+                <input type="submit" name="submit" value="Close Day" class="btn btn-danger">
+            </form>
         </div>
     </div>
 

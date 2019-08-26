@@ -163,3 +163,11 @@ p {
 .background-black {
     background-color: black;
 }
+
+#email-form-btn {
+    margin-right: 10px;
+}
+
+#close-form-btn {
+    margin-left: 10px;
+}

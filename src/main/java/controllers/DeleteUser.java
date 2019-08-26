@@ -26,7 +26,7 @@ public class DeleteUser extends HttpServlet{
         timeSlots[i] = current;
         day.setTimeSlots(timeSlots);
         context.setAttribute("day", day);
-        request.getRequestDispatcher("/index.jsp").forward(request,response);
+        request.getRequestDispatcher("/adminView.jsp").forward(request,response);
     }
 
     @Override

@@ -1,25 +1,11 @@
 package controllers;
 
-import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
-import config.email.BaeldungSendEmail;
-import config.email.JavatPointEmail;
-import config.email.SendEmailSMTP;
-import objects.AdminUser;
-import objects.Day;
-import objects.TimeSlot;
-import objects.User;
-import beans.ListBean;
-import org.apache.catalina.Session;
-import sun.plugin2.message.Message;
-import sun.plugin2.message.transport.Transport;
+import config.email.EmailService;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.*;
-import java.net.Authenticator;
-import java.net.PasswordAuthentication;
-import java.util.Properties;
 
 
 @WebServlet(urlPatterns={"/emailDay"})
@@ -32,9 +18,11 @@ public class EmailDay extends HttpServlet{
 //
 //        emailTakings(takings);
 //
-        SendEmailSMTP.sendEmail();
-//        BaeldungSendEmail.sendEmail();
-//        JavatPointEmail.SendMailBySite();
+        try {
+            EmailService.sendEmail("dylancawsey@gmail.com");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
         request.getRequestDispatcher("/index.jsp").forward(request,response);
     }

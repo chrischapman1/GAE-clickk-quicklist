@@ -37,11 +37,13 @@
 <h1 class="font-theme">Quicklist Admin</h1>
 
 <div class="container">
+    <!--
     <div class="row justify-content-center">
         <form method="get" action="/closeDay">
             <input type="submit" value="Close Day" class="btn btn-danger" />
         </form>
     </div>
+    -->
     <div>
         <table id="ts">
             <tr>
@@ -64,7 +66,7 @@
                             if (timeSlotsUser[i].getPaymentValue() != 0) {
                     %>
                     <p class="name">
-                        Paid by <%=timeSlotsUser[i].getPayment()%> for $<%=timeSlotsUser[i].getPaymentDollar()%>
+                        Paid $<%=timeSlotsUser[i].getPaymentDollar()%> by <%=timeSlotsUser[i].getPayment()%>
                     </p>
                     <%      } else { %>
                     <div class="container option-div">
@@ -111,11 +113,11 @@
         })();
     }
 
-    $(document).ready(function() {
-        setInterval(function () {
-            refreshTable();
-        }, 5000);
-    });
+    // $(document).ready(function() {
+    //     setInterval(function () {
+    //         refreshTable();
+    //     }, 5000);
+    // });
 </script>
 
 </body>
