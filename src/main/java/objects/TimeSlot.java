@@ -12,6 +12,8 @@ public class TimeSlot
     private String payment = "";
     private float paymentValue = 0;
 
+    private Payment finalPayment;
+
 
     public TimeSlot()
     {
@@ -23,6 +25,8 @@ public class TimeSlot
         this.minute = minute;
         emptyUser = new User("","");
         this.current = emptyUser;
+
+        this.finalPayment = null;
     }
 
     public static String getJsonTimeSlot(TimeSlot ts)
@@ -173,5 +177,22 @@ public class TimeSlot
                 ", payment='" + payment + '\'' +
                 ", paymentValue=" + paymentValue +
                 '}';
+    }
+
+    public Payment getFinalPayment() {
+        return finalPayment;
+    }
+
+    public void setFinalPayment(String appointmentType, double amount, String payment) {
+        this.finalPayment = new Payment(appointmentType, amount, getPaymentType(payment));
+    }
+
+    private Payment.PaymentType getPaymentType(String paymentType) {
+        switch (paymentType) {
+            case "cash": return Payment.PaymentType.CASH;
+            case "giftVoucher": return Payment.PaymentType.GIFT_VOUCHER;
+            case "free": return Payment.PaymentType.FREE;
+            default: return Payment.PaymentType.CARD;
+        }
     }
 }
