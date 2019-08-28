@@ -37,13 +37,11 @@
 <h1 class="font-theme">Quicklist Admin</h1>
 
 <div class="container">
-    <!--
     <div class="row justify-content-center">
         <form method="get" action="/closeDay">
             <input type="submit" value="Close Day" class="btn btn-danger" />
         </form>
     </div>
-    -->
     <div>
         <table id="ts">
             <tr>

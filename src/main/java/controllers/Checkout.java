@@ -20,6 +20,7 @@ public class Checkout extends HttpServlet{
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServletContext context = request.getServletContext();
         TimeSlot ts = (TimeSlot) context.getAttribute("currentTimeSlot");
+
         ts.setPayment(request.getParameter("paymentType"));
         ts.setPaymentValue(Float.parseFloat(request.getParameter("paymentValue")));
 
@@ -38,6 +39,9 @@ public class Checkout extends HttpServlet{
         String date = currentDate.toString() +" " +ts.getSQLFormat() +":00";
 //        boolean success = MySQLConnection.addPayment(date, request.getParameter("nameInput"), appointmentType,
 //                ts.getPayment(), ts.getPaymentValue());
+
+        ts.setFinalPayment(appointmentType, Float.parseFloat(request.getParameter("paymentValue")),
+                request.getParameter("paymentType"));
 
         context.setAttribute("currentTimeSlot", ts);
         context.setAttribute("cart", new Cart());

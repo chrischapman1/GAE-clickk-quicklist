@@ -56,9 +56,9 @@ public class AddUserController extends HttpServlet{
         }
 
         // Debugging
-        for (int i=0; i < timeSlots.length; i++) {
-            System.out.println(timeSlots[i].toString());
-        }
+//        for (int i=0; i < timeSlots.length; i++) {
+//            System.out.println(timeSlots[i].toString());
+//        }
 
         context.setAttribute("day", day);
         request.getRequestDispatcher("/index.jsp").forward(request,response);

@@ -14,7 +14,6 @@ public class TimeSlot
 
     private Payment finalPayment;
 
-
     public TimeSlot()
     {
     }

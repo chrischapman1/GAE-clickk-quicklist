@@ -1,9 +1,6 @@
 package controllers;
 
-import objects.AdminUser;
-import objects.Day;
-import objects.TimeSlot;
-import objects.User;
+import objects.*;
 import beans.ListBean;
 
 import javax.servlet.*;
@@ -18,6 +15,15 @@ public class CloseDay extends HttpServlet{
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServletContext context = request.getServletContext();
+        Day day = (Day) context.getAttribute("day");
+
+        for (TimeSlot ts : day.getTimeSlots(false)) {
+            Payment payment = ts.getFinalPayment();
+            if (payment != null)
+                System.out.println(ts.getSQLFormat() +": " +ts.getFinalPayment().toString());
+            else
+                System.out.println(ts.getSQLFormat() +": no payment made");
+        }
 
         request.getRequestDispatcher("/closeDay.jsp").forward(request,response);
     }

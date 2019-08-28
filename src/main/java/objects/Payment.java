@@ -1,7 +1,7 @@
 package objects;
 
 public class Payment {
-    enum PaymentType {
+    public enum PaymentType {
         CARD,
         CASH,
         GIFT_VOUCHER,
@@ -40,5 +40,10 @@ public class Payment {
 
     public void setPaymentType(PaymentType paymentType) {
         this.paymentType = paymentType;
+    }
+
+    @Override
+    public String toString() {
+        return this.appointmentType +", $" +this.amount +", " +this.paymentType;
     }
 }
