@@ -26,13 +26,6 @@
     AdminUser adminUser = (AdminUser) sesh.getAttribute("adminUser");
     TimeSlot[] timeSlotsClient = day.getTimeSlots(false);
     TimeSlot[] timeSlotsUser = day.getTimeSlots(false);
-
-    LocalTime time = LocalTime.now();
-    int hour = time.getHour();
-    int min = time.getMinute();
-
-    // For GAE server - time is UTC+0 (need to add 10 hours)
-    //hour += 10;
 %>
 
 <div class="container-fluid">
@@ -86,61 +79,63 @@
 <script type="text/javascript">
     function refreshTable() {
         (function () {
-            // var timeSlotsJson = "https://clickk-quicklist.appspot.com/currentTimeSlot";
-            var timeSlotsJson = "http://localhost:8080/currentTimeSlot";
+            var timeSlotsJson = "https://clickk-quicklist.appspot.com/currentTimeSlot";
+            // var timeSlotsJson = "http://localhost:8080/currentTimeSlot";
             $.getJSON(timeSlotsJson)
                 .done(function (response) {
 
                     var timeslots = response["timeslots"];
+
                     // Variables for current time
                     var today = new Date();
                     var hour = today.getHours();
                     var min = today.getMinutes();
                     var amPm = "am";
+
                     var startIndex = 0;
-                    // var timeslotString = "";
                     for (var i = 0; i < timeslots.length; i++) {
-                        // timeslotString += timeslots[i]["time"] +" - " +timeslots[i]["name"] +"\n";
                         var tsTime = timeslots[i]["time"].split(":");
                         var tsHour = parseInt(tsTime[0], 10);
                         var tsMin = parseInt(tsTime[1], 10);
 
                         if (tsTime[0] <= 5) {
                             tsTime[0] += 12;
-                            amPm = "pm"
+                            amPm = "pm";
                         }
 
-                        if (hour < tsHour || (hour == tsHour && min < tsMin)) {
-                            break;
-                        } else if ((hour == tsHour) && (min < (tsMin + 15)) && (timeslots[i]["name"] == "")) {
-                            // If current time slot has expired but time remains in slot and is vacant
-                            break;
-                        } else {
-                            startIndex += 1;
+                        // Find next available time slot
+                        if (timeslots[i]["name"] == "") {
+                            if (hour < tsHour || (hour == tsHour && min < tsMin)) {
+                                break;
+                            }
+                            else if (hour == tsHour && (min < (tsMin + 15))) {
+                                break;
+                            }
                         }
+                        startIndex += 1;
                     }
 
                     document.getElementById("span-available").textContent = timeslots[startIndex]["time"] +" " +amPm;
-                    // alert(timeslotString);
                 });
         })();
     }
 
     function createTable() {
         (function () {
-            // var timeSlotsJson = "https://clickk-quicklist.appspot.com/currentTimeSlot";
-            var timeSlotsJson = "http://localhost:8080/currentTimeSlot";
+            var timeSlotsJson = "https://clickk-quicklist.appspot.com/currentTimeSlot";
+            // var timeSlotsJson = "http://localhost:8080/currentTimeSlot";
             $.getJSON(timeSlotsJson)
                 .done(function (response) {
 
                     var timeslots = response["timeslots"];
+
                     // Variables for current time
                     var today = new Date();
                     var hour = today.getHours();
                     var min = today.getMinutes();
                     var amPm = "am";
-                    var startIndex = 0;
 
+                    var startIndex = 0;
                     for (var i = 0; i < timeslots.length; i++) {
                         var tsTime = timeslots[i]["time"].split(":");
                         var tsHour = parseInt(tsTime[0], 10);
@@ -148,20 +143,22 @@
 
                         if (tsTime[0] <= 5) {
                             tsTime[0] += 12;
-                            amPm = "pm"
+                            amPm = "pm";
                         }
 
-                        if (hour < tsHour || (hour == tsHour && min < tsMin)) {
-                            break;
-                        } else if ((hour == tsHour) && (min < (tsMin + 15)) && (timeslots[i]["name"] == "")) {
-                            // If current time slot has expired but time remains in slot and is vacant
-                            break;
-                        } else {
-                            startIndex += 1;
+                        // Find next available time slot
+                        if (timeslots[i]["name"] == "") {
+                            if (hour < tsHour || (hour == tsHour && min < tsMin)) {
+                                break;
+                            }
+                            else if (hour == tsHour && (min < (tsMin + 15))) {
+                                break;
+                            }
                         }
+                        startIndex += 1;
                     }
 
-                    for (var i=startIndex-1; i < timeslots.length; i++) {
+                    for (var i=0; i < timeslots.length; i++) {
                         if (timeslots[i]["name"] != "") {
                             var insert = "<tr>"
                                 +"<td class=\"time\">"

@@ -26,52 +26,54 @@ public class AddUserController extends HttpServlet{
         User current = new User(lastBooked, request.getParameter("phoneemail"));
 
         ServletContext context = request.getServletContext();
-        Day day = (Day) context.getAttribute("day");
-        TimeSlot[] timeSlots = day.getTimeSlots(false);
+        String lastBookingSubmitted = (String) context.getAttribute("lastBooked");
 
-        // Time should be expressed in 24-hour time; to enable logic for booking
-        // ---------------------------------------------------------------------
-        SimpleDateFormat format = new SimpleDateFormat("HH");
-        // ---------------------------------------------------------------------
+        // Do not allow refresh to resubmit the same booking
+        if (lastBooked.equals(lastBookingSubmitted)) {
+            request.getRequestDispatcher("/index.jsp").forward(request,response);
+        } else {
+            Day day = (Day) context.getAttribute("day");
+            TimeSlot[] timeSlots = day.getTimeSlots(false);
 
-        format.setTimeZone(TimeZone.getTimeZone("Australia/NSW"));
-        String formattedDate = format.format(new Date());
-        int hour  = Integer.parseInt(formattedDate);
+            // Time should be expressed in 24-hour time; to enable logic for booking
+            // ---------------------------------------------------------------------
+            SimpleDateFormat format = new SimpleDateFormat("HH");
+            // ---------------------------------------------------------------------
 
-        SimpleDateFormat formatMin = new SimpleDateFormat("mm");
-        formatMin.setTimeZone(TimeZone.getTimeZone("Australia/NSW"));
-        String formattedDateMin = formatMin.format(new Date());
-        int min  = Integer.parseInt(formattedDateMin);
+            format.setTimeZone(TimeZone.getTimeZone("Australia/NSW"));
+            String formattedDate = format.format(new Date());
+            int hour  = Integer.parseInt(formattedDate);
 
-        for (int i =0; i < timeSlots.length; i++)
-        {
-            if (timeSlots[i].getUser().getName().equals(""))
+            SimpleDateFormat formatMin = new SimpleDateFormat("mm");
+            formatMin.setTimeZone(TimeZone.getTimeZone("Australia/NSW"));
+            String formattedDateMin = formatMin.format(new Date());
+            int min  = Integer.parseInt(formattedDateMin);
+
+            for (int i =0; i < timeSlots.length; i++)
             {
-                if ((hour < timeSlots[i].getHour()) || ((hour == timeSlots[i].getHour()) && (min < timeSlots[i].getMinute()))) {
-                    timeSlots[i].addUser(current);
-                    break;
-                }
+                if (timeSlots[i].getUser().getName().equals(""))
+                {
+                    if ((hour < timeSlots[i].getHour()) || ((hour == timeSlots[i].getHour()) && (min < timeSlots[i].getMinute()))) {
+                        timeSlots[i].addUser(current);
+                        break;
+                    }
 
-                else if ((hour == timeSlots[i].getHour()) && (min < (timeSlots[i].getMinute()+15))) {
-                    timeSlots[i].addUser(current);
-                    break;
+                    else if ((hour == timeSlots[i].getHour()) && (min < (timeSlots[i].getMinute()+15))) {
+                        timeSlots[i].addUser(current);
+                        break;
+                    }
                 }
             }
+
+            // Debugging
+            for (int i=0; i < timeSlots.length; i++) {
+                System.out.println(timeSlots[i].toString());
+            }
+            System.out.println();
+
+            context.setAttribute("day", day);
+            context.setAttribute("lastBooked", lastBooked);
+            request.getRequestDispatcher("/index.jsp").forward(request,response);
         }
-
-        // Debugging
-        for (int i=0; i < timeSlots.length; i++) {
-            System.out.println(timeSlots[i].toString());
-        }
-
-        context.setAttribute("day", day);
-        context.setAttribute("lastBooked", lastBooked);
-        request.getRequestDispatcher("/index.jsp").forward(request,response);
     }
-
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/result.jsp").forward(request,response);
-    }
-
 }
