@@ -30,16 +30,6 @@
         <url-pattern>/addUser</url-pattern>
     </servlet-mapping>
 
-    <display-name>loginAdmin</display-name>
-    <servlet>
-        <servlet-name>loginAdmin</servlet-name>
-        <servlet-class>controllers.LoginAdmin</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>loginAdmin</servlet-name>
-        <url-pattern>/loginAdmin</url-pattern>
-    </servlet-mapping>
-
     <display-name>deleteUser</display-name>
     <servlet>
         <servlet-name>deleteUser</servlet-name>
