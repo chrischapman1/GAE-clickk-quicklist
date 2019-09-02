@@ -73,9 +73,21 @@
                             if (timeSlotsUser[i].getFinalPayment() != null) {
                                 DecimalFormat df = new DecimalFormat("0.00");
                     %>
-                    <p class="name">
-                        Paid $<%=df.format(timeSlotsUser[i].getFinalPayment().getAmount())%> by <%=timeSlotsUser[i].getFinalPayment().getPaymentType()%>
-                    </p>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <p class="name">
+                                    Paid $<%=df.format(timeSlotsUser[i].getFinalPayment().getAmount())%> by <%=timeSlotsUser[i].getFinalPayment().getPaymentType()%>
+                                </p>
+                            </div>
+                            <div class="col">
+                                <form method="post" action="pay" class="no-margin-form">
+                                    <input type="text" value="<%=i%>" name="i" hidden="true"></input>
+                                    <input type="submit" name="submit" value="Edit" class="btn btn-warning float-left btn-width-100"></input>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                     <%      } else { %>
                     <div class="container option-div">
                         <div class="row">

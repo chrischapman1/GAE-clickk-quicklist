@@ -61,9 +61,10 @@
             <button type="submit" class="btn btn-danger">Join Queue</button>
         </form>
         <script>
+            document.getElementById("name-booked").focus();
             function checkLastBooked() {
                 if (document.getElementById("name-booked").value == document.getElementById("last-booked").value) {
-                    alert("ERROR: repeated request.");
+                    alert("ERROR: Booking submitted has already been made.");
                     return false;
                 }
                 return true;

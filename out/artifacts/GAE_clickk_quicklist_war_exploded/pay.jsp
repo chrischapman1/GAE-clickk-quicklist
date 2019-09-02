@@ -24,16 +24,15 @@
     <jsp:include page="/adminMenu.jsp" />
 
     <h1 class="text-center margin-top-40 margin-bottom-40">Make Payment</h1>
-
     <div class="container">
         <div class="row justify-content-center">
             <form id="checkout-form" action="checkout" method="post">
                 <div class="form-group">
                     <label for="nameInput">Client Name</label>
                     <% if (request.getParameter("nameParameter") != null) { %>
-                        <input type="text" class="form-control" id="nameInput" name="nameInput" placeholder="Enter name...">
+                    <input type="text" class="form-control" id="nameInput" name="nameInput" placeholder="Enter name...">
                     <% } else { %>
-                        <input type="text" class="form-control" id="nameInput" name="nameInput" value="<%= ts.getUser().getName()%>" placeholder="Enter name..." readonly>
+                    <input type="text" class="form-control" id="nameInput" name="nameInput" value="<%= ts.getUser().getName()%>" placeholder="Enter name..." readonly>
                     <% } %>
                 </div>
                 <div class="form-group">
