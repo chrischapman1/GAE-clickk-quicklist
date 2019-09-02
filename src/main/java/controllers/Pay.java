@@ -17,27 +17,27 @@ public class Pay extends HttpServlet{
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Validate admin user server side
         ServletContext context = request.getServletContext();
-        Day day = (Day) context.getAttribute("day");
-        TimeSlot ts = new TimeSlot();
+        if (context.getAttribute("adminUser") != null) {
+            Day day = (Day) context.getAttribute("day");
+            TimeSlot ts = new TimeSlot();
 
-        int i = Integer.valueOf(request.getParameter("i"));
-        if (i == -1)
-        {
-            ts = new TimeSlot(-1, 00);
+            int i = Integer.valueOf(request.getParameter("i"));
+            if (i == -1)
+            {
+                ts = new TimeSlot(-1, 00);
+            }
+            else
+            {
+                ts = day.getTimeSlots(false)[i];
+            }
+
+            //ts = (TimeSlot) context.getAttribute("currentTimeSlot");
+            context.setAttribute("currentTimeSlot", ts);
+            request.getRequestDispatcher("/pay.jsp").forward(request,response);
+        } else {
+            request.getRequestDispatcher("/adminLogin.jsp").forward(request,response);
         }
-        else
-        {
-            ts = day.getTimeSlots(false)[i];
-        }
-
-        //ts = (TimeSlot) context.getAttribute("currentTimeSlot");
-        context.setAttribute("currentTimeSlot", ts);
-        request.getRequestDispatcher("/pay.jsp").forward(request,response);
     }
-
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) {
-    }
-
 }

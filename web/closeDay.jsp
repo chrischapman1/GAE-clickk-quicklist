@@ -1,16 +1,14 @@
 <%@ page import="java.util.LinkedList" %>
-<%@ page import="objects.User" %>
 <%@ page import="java.util.List" %>
 <%@ page import="beans.ListBean" %>
-<%@ page import="objects.Day" %>
-<%@ page import="objects.TimeSlot" %>
-<%@ page import="objects.AdminUser" %>
 <%@ page import="java.text.DateFormat" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.time.Instant" %>
+<%@ page import="objects.*" %>
+<%@ page import="java.text.DecimalFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
@@ -30,21 +28,57 @@
     <%
     ServletContext context = request.getServletContext();
     Day day = (Day) context.getAttribute("day");
-    TimeSlot[] current = day.getTimeSlots(false);
-    int cash = 0, card = 0, giftvoucher = 0, free = 0;
-    for (int i=0; i < current.length; i++)
-    {
-        if (current[i].getPayment().equals("cash"))
-            cash += current[i].getPaymentValue();
-        else if (current[i].getPayment().equals("card"))
-            card += current[i].getPaymentValue();
-        else if (current[i].getPayment().equals("giftVoucher"))
-            giftvoucher += current[i].getPaymentValue();
-        else if (current[i].getPayment().equals("free"))
-            free += current[i].getPaymentValue();
+    DecimalFormat df = new DecimalFormat("0.00");
+    double cash = 0.0, card = 0.0, giftvoucher = 0.0, total = 0.0;
+    int freeCount = 0;
+    for (TimeSlot ts : day.getTimeSlots(false)) {
+        if (ts.getFinalPayment() != null) {
+            Payment payment = ts.getFinalPayment();
+            switch (payment.getPaymentType()) {
+                case CARD: card += payment.getAmount(); break;
+                case CASH: cash += payment.getAmount(); break;
+                case FREE: freeCount++; break;
+                case GIFT_VOUCHER: giftvoucher += payment.getAmount(); break;
+            }
+            total += payment.getAmount();
+        }
     }
-    String takings = "Card: " + card + "Cash: " + cash + "Gift Voucher: " + giftvoucher + "Free: " + free;
-    context.setAttribute("dayTakings", takings);
+
+    String tableOutput =
+"           <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\" integrity=\"sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T\" crossorigin=\"anonymous\">\n" +
+"           <table class=\"table table-hover\">\n" +
+"                <thead>\n" +
+"                <tr>\n" +
+"                    <th scope=\"col\">Payment Type</th>\n" +
+"                    <th scope=\"col\">Amount</th>\n" +
+"                </tr>\n" +
+"                </thead>\n" +
+"                <tbody>\n" +
+"                <tr>\n" +
+"                    <td>Card</td>\n" +
+"                    <td>$" +df.format(card) +"</td>\n" +
+"                </tr>\n" +
+"                <tr>\n" +
+"                    <td>Cash</td>\n" +
+"                    <td>$" +df.format(cash) +"</td>\n" +
+"                </tr>\n" +
+"                <tr>\n" +
+"                    <td>Gift Voucher</td>\n" +
+"                    <td>$" +df.format(giftvoucher) +"</td>\n" +
+"                </tr>\n" +
+"                <tr>\n" +
+"                    <td>Free (count)</td>\n" +
+"                    <td>" +freeCount +"</td>\n" +
+"                </tr>\n" +
+"                <tr class=\"table-active\">\n" +
+"                    <td>Total</td>\n" +
+"                    <td>$" +df.format(total) +"</td>\n" +
+"                </tr>\n" +
+"                </tbody>\n" +
+"            </table>\n";
+
+    day.setHtmlAnalyticsOutput(tableOutput);
+
     %>
 
     <jsp:include page="adminMenu.jsp" />
@@ -54,9 +88,7 @@
             <h1 class="font-theme">Close Day</h1>
         </div>
         <div class="row justify-content-center">
-            <p>
-                Cash: $<%=cash%>, Card: $<%=card%>, Gift Voucher: $<%=giftvoucher%>, Free: $<%=free%>
-            </p>
+            <%= tableOutput %>
         </div>
         <div class="row justify-content-center">
             <form id="email-form-btn" method="post" action="emailDay">

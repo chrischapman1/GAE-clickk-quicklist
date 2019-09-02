@@ -22,7 +22,8 @@ public class AddUserController extends HttpServlet{
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        User current = new User(request.getParameter("name"), request.getParameter("phoneemail"));
+        String lastBooked = request.getParameter("name");
+        User current = new User(lastBooked, request.getParameter("phoneemail"));
 
         ServletContext context = request.getServletContext();
         Day day = (Day) context.getAttribute("day");
@@ -48,19 +49,23 @@ public class AddUserController extends HttpServlet{
             {
                 if ((hour < timeSlots[i].getHour()) || ((hour == timeSlots[i].getHour()) && (min < timeSlots[i].getMinute()))) {
                     timeSlots[i].addUser(current);
-                    // ---------------------------------------------------------------------
                     break;
-                    // ---------------------------------------------------------------------
+                }
+
+                else if ((hour == timeSlots[i].getHour()) && (min < (timeSlots[i].getMinute()+15))) {
+                    timeSlots[i].addUser(current);
+                    break;
                 }
             }
         }
 
         // Debugging
-//        for (int i=0; i < timeSlots.length; i++) {
-//            System.out.println(timeSlots[i].toString());
-//        }
+        for (int i=0; i < timeSlots.length; i++) {
+            System.out.println(timeSlots[i].toString());
+        }
 
         context.setAttribute("day", day);
+        context.setAttribute("lastBooked", lastBooked);
         request.getRequestDispatcher("/index.jsp").forward(request,response);
     }
 

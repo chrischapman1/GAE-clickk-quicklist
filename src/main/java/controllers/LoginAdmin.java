@@ -32,12 +32,12 @@ public class LoginAdmin extends HttpServlet{
         final String user = "admin";
         final String pass = "n3wLime70";
 
-        HttpSession sesh = request.getSession();
+        ServletContext context = request.getServletContext();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
         if (username.equals(user) && password.equals(pass)) {
-            sesh.setAttribute("adminUser", new AdminUser(username));
+            context.setAttribute("adminUser", new AdminUser(username));
             request.getRequestDispatcher("/adminView.jsp").forward(request,response);
         } else {
             request.getRequestDispatcher("/adminLogin.jsp?status=failed").forward(request, response);

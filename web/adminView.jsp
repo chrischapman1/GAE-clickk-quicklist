@@ -1,6 +1,7 @@
 <%@ page import="objects.Day" %>
 <%@ page import="objects.AdminUser" %>
-<%@ page import="objects.TimeSlot" %><%--
+<%@ page import="objects.TimeSlot" %>
+<%@ page import="java.text.DecimalFormat" %><%--
   Created by IntelliJ IDEA.
   User: dylan
   Date: 20/08/2019
@@ -36,7 +37,15 @@
 
 <h1 class="font-theme">Quicklist Admin</h1>
 
+
 <div class="container">
+<% if ((boolean) context.getAttribute("isClosed")) { %>
+    <div class="row justify-content-center">
+        <form method="get" action="/newDay">
+            <input type="submit" value="Open Day" class="btn btn-danger" />
+        </form>
+    </div>
+<% } else { %>
     <div class="row justify-content-center">
         <form method="get" action="/closeDay">
             <input type="submit" value="Close Day" class="btn btn-danger" />
@@ -61,10 +70,11 @@
                 <td>
                     <%
                         if (!timeSlotsUser[i].getUser().getName().equals("")) {
-                            if (timeSlotsUser[i].getPaymentValue() != 0) {
+                            if (timeSlotsUser[i].getFinalPayment() != null) {
+                                DecimalFormat df = new DecimalFormat("0.00");
                     %>
                     <p class="name">
-                        Paid $<%=timeSlotsUser[i].getPaymentDollar()%> by <%=timeSlotsUser[i].getPayment()%>
+                        Paid $<%=df.format(timeSlotsUser[i].getFinalPayment().getAmount())%> by <%=timeSlotsUser[i].getFinalPayment().getPaymentType()%>
                     </p>
                     <%      } else { %>
                     <div class="container option-div">
@@ -89,6 +99,9 @@
             <% } %>
         </table>
     </div>
+<% } %>
+
+
 
 </div>
 

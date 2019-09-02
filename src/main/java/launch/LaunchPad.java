@@ -107,13 +107,12 @@ public class LaunchPad implements ServletContextListener {
                 }
             }; */
             ServletContext session = event.getServletContext();
-            Day day = new Day();
-            day.initialise(false);
+            Day day = new Day(false);
             Cart cart = new Cart();
             session.setAttribute("day", day);
             session.setAttribute("cart", cart);
-            boolean isClosed = false;
-            session.setAttribute("isClosed", isClosed);
+            session.setAttribute("isClosed", false);
+            session.setAttribute("adminUser", null);
         }
     }
 

@@ -17,14 +17,14 @@ public class LogoutAdmin extends HttpServlet{
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession sesh = request.getSession();
-        sesh.setAttribute("adminUser", null);
-        request.getRequestDispatcher("/index.jsp").forward(request,response);
-    }
-
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request, response);
+        // Validate admin user server side
+        ServletContext context = request.getServletContext();
+        if (context.getAttribute("adminUser") != null) {
+            context.setAttribute("adminUser", null);
+            request.getRequestDispatcher("/index.jsp").forward(request,response);
+        } else {
+            request.getRequestDispatcher("/adminLogin.jsp").forward(request,response);
+        }
     }
 
 }

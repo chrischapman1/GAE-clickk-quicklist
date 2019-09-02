@@ -6,7 +6,9 @@ import java.util.*;
 public class Day {
 
     private TimeSlot[] timeSlots;
+    private boolean open;
     private boolean isWeekend;
+    private String htmlAnalyticsOutput;
 
     public TimeSlot[] getTimeSlots(boolean isClient) {
         if (!(isClient))
@@ -39,9 +41,10 @@ public class Day {
         this.timeSlots = timeSlots;
     }
 
-    public Day()
-    {
-
+    public Day(boolean isWeekend) {
+        initialise(isWeekend);
+        this.open = true; // SUNDAY???
+        this.htmlAnalyticsOutput = null;
     }
 
     public String getNextAvailableTime()
@@ -165,5 +168,21 @@ public class Day {
     public boolean isWeekend()
     {
         return isWeekend;
+    }
+
+    public String getHtmlAnalyticsOutput() {
+        return htmlAnalyticsOutput;
+    }
+
+    public void setHtmlAnalyticsOutput(String htmlAnalyticsOutput) {
+        this.htmlAnalyticsOutput = htmlAnalyticsOutput;
+    }
+
+    public boolean isOpen() {
+        return open;
+    }
+
+    public void setOpen(boolean open) {
+        this.open = open;
     }
 }
