@@ -26,6 +26,6 @@ public class AddToCart extends HttpServlet {
         cart.addCart(request.getParameter("cutType"));
         context.setAttribute("cart", cart);
 
-        request.getRequestDispatcher("/pay.jsp").forward(request,response);
+        request.getRequestDispatcher("WEB-INF/jsp/pay.jsp").forward(request,response);
     }
 }

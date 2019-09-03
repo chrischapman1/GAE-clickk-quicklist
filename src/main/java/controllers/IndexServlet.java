@@ -48,7 +48,7 @@ public class IndexServlet extends HttpServlet {
 
         // Add variables and render the page
         req.setAttribute("status", status);
-        req.getRequestDispatcher("/result.jsp").forward(req, resp);
+        req.getRequestDispatcher("WEB-INF/jsp/result.jsp").forward(req, resp);
     }
 
     @Override

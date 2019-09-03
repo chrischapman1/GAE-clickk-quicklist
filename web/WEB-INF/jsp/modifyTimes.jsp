@@ -15,7 +15,7 @@
 </head>
 <body>
 
-<jsp:include page="/adminMenu.jsp" />
+<jsp:include page="/WEB-INF/jsp/adminMenu.jsp" />
 
 <div class="container">
     <div class="row justify-content-center">

@@ -21,7 +21,7 @@
         TimeSlot ts = (TimeSlot) context.getAttribute("currentTimeSlot");
     %>
 
-    <jsp:include page="/adminMenu.jsp" />
+    <jsp:include page="/WEB-INF/jsp/adminMenu.jsp" />
 
     <h1 class="text-center margin-top-40 margin-bottom-40">Make Payment</h1>
     <div class="container">

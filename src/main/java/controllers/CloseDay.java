@@ -27,9 +27,9 @@ public class CloseDay extends HttpServlet{
                     System.out.println(ts.getSQLFormat() +": no payment made");
             }
 
-            request.getRequestDispatcher("/closeDay.jsp").forward(request,response);
+            request.getRequestDispatcher("WEB-INF/jsp/closeDay.jsp").forward(request,response);
         } else {
-            request.getRequestDispatcher("/adminLogin.jsp").forward(request,response);
+            request.getRequestDispatcher("WEB-INF/jsp/adminLogin.jsp").forward(request,response);
         }
     }
 }

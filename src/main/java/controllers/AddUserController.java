@@ -30,7 +30,7 @@ public class AddUserController extends HttpServlet{
 
         // Do not allow refresh to resubmit the same booking
         if (lastBooked.equals(lastBookingSubmitted)) {
-            request.getRequestDispatcher("/index.jsp").forward(request,response);
+            request.getRequestDispatcher("WEB-INF/jsp/index.jsp").forward(request,response);
         } else {
             Day day = (Day) context.getAttribute("day");
             TimeSlot[] timeSlots = day.getTimeSlots(false);
@@ -73,7 +73,7 @@ public class AddUserController extends HttpServlet{
 
             context.setAttribute("day", day);
             context.setAttribute("lastBooked", lastBooked);
-            request.getRequestDispatcher("/index.jsp").forward(request,response);
+            request.getRequestDispatcher("WEB-INF/jsp/index.jsp").forward(request,response);
         }
     }
 }

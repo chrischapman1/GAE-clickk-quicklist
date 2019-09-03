@@ -33,7 +33,7 @@
     TimeSlot[] timeSlotsUser = day.getTimeSlots(false);
 %>
 
-<jsp:include page="/adminMenu.jsp" />
+<jsp:include page="/WEB-INF/jsp/adminMenu.jsp" />
 
 <h1 class="font-theme">Quicklist Admin</h1>
 

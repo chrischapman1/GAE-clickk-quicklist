@@ -35,9 +35,9 @@ public class Pay extends HttpServlet{
 
             //ts = (TimeSlot) context.getAttribute("currentTimeSlot");
             context.setAttribute("currentTimeSlot", ts);
-            request.getRequestDispatcher("/pay.jsp").forward(request,response);
+            request.getRequestDispatcher("WEB-INF/jsp/pay.jsp").forward(request,response);
         } else {
-            request.getRequestDispatcher("/adminLogin.jsp").forward(request,response);
+            request.getRequestDispatcher("WEB-INF/jsp/adminLogin.jsp").forward(request,response);
         }
     }
 }

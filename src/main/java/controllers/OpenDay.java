@@ -29,7 +29,7 @@ public class OpenDay extends HttpServlet{
             sesh.invalidate();
             request.getRequestDispatcher("/index.jsp").forward(request,response);
         } else {
-            request.getRequestDispatcher("/adminLogin.jsp").forward(request,response);
+            request.getRequestDispatcher("WEB-INF/jsp/adminLogin.jsp").forward(request,response);
         }
     }
 }

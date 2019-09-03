@@ -31,9 +31,9 @@ public class NewDay extends HttpServlet{
             Day day = new Day(isWeekend);
             context.setAttribute("day", day);
             context.setAttribute("isClosed", true);
-            request.getRequestDispatcher("/adminView.jsp").forward(request,response);
+            request.getRequestDispatcher("WEB-INF/jsp/adminView.jsp").forward(request,response);
         } else {
-            request.getRequestDispatcher("/adminLogin.jsp").forward(request,response);
+            request.getRequestDispatcher("WEB-INF/jsp/adminLogin.jsp").forward(request,response);
         }
     }
 
@@ -45,9 +45,9 @@ public class NewDay extends HttpServlet{
             Day day = new Day(false);
             context.setAttribute("day", day);
             context.setAttribute("isClosed", false);
-            request.getRequestDispatcher("/adminView.jsp").forward(request,response);
+            request.getRequestDispatcher("WEB-INF/jsp/adminView.jsp").forward(request,response);
         } else {
-            request.getRequestDispatcher("/adminLogin.jsp").forward(request,response);
+            request.getRequestDispatcher("WEB-INF/jsp/adminLogin.jsp").forward(request,response);
         }
     }
 }

@@ -23,7 +23,7 @@ public class LogoutAdmin extends HttpServlet{
             context.setAttribute("adminUser", null);
             request.getRequestDispatcher("/index.jsp").forward(request,response);
         } else {
-            request.getRequestDispatcher("/adminLogin.jsp").forward(request,response);
+            request.getRequestDispatcher("WEB-INF/jsp/adminLogin.jsp").forward(request,response);
         }
     }
 

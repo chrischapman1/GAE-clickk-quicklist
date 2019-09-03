@@ -47,9 +47,9 @@ public class Checkout extends HttpServlet{
 
             context.setAttribute("currentTimeSlot", ts);
             context.setAttribute("cart", new Cart());
-            request.getRequestDispatcher("/adminView.jsp").forward(request,response);
+            request.getRequestDispatcher("WEB-INF/jsp/adminView.jsp").forward(request,response);
         } else {
-            request.getRequestDispatcher("/adminLogin.jsp").forward(request,response);
+            request.getRequestDispatcher("WEB-INF/jsp/adminLogin.jsp").forward(request,response);
         }
     }
 }

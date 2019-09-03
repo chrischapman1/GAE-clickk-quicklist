@@ -24,7 +24,7 @@ public class LoginAdmin extends HttpServlet{
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/adminLogin.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/jsp/adminLogin.jsp").forward(request, response);
     }
 
     @Override
@@ -38,9 +38,9 @@ public class LoginAdmin extends HttpServlet{
 
         if (username.equals(user) && password.equals(pass)) {
             context.setAttribute("adminUser", new AdminUser(username));
-            request.getRequestDispatcher("/adminView.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/jsp/adminView.jsp").forward(request, response);
         } else {
-            request.getRequestDispatcher("/adminLogin.jsp?status=failed").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/jsp/adminLogin.jsp?status=failed").forward(request, response);
         }
 
 
