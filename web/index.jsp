@@ -115,7 +115,7 @@
                         startIndex += 1;
                     }
 
-                    document.getElementById("span-available").textContent = timeslots[startIndex]["time"] +" " +amPm;
+                    document.getElementById("span-available").innerHTML  = timeslots[startIndex]["time"] +" " +amPm;
                 });
         })();
     }

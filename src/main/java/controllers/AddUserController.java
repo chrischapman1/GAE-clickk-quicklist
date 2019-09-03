@@ -73,7 +73,7 @@ public class AddUserController extends HttpServlet{
 
             context.setAttribute("day", day);
             context.setAttribute("lastBooked", lastBooked);
-            request.getRequestDispatcher("WEB-INF/jsp/index.jsp").forward(request,response);
+            request.getRequestDispatcher("/index.jsp").forward(request,response);
         }
     }
 }

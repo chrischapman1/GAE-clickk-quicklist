@@ -22,12 +22,13 @@ public class EmailDay extends HttpServlet{
             Date date = new Date();
             String emailContent = "<h2>Cost Analytics - " +date.toString() +"</h2>\n" +day.getHtmlAnalyticsOutput();
             try {
-                EmailService.sendEmail("dylancawsey@gmail.com", emailContent);
+//                EmailService.sendEmail("dylancawsey@gmail.com", emailContent);
+                EmailService.sendSimpleMail();
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
 
-            request.getRequestDispatcher("/index.jsp").forward(request,response);
+            request.getRequestDispatcher("WEB-INF/jsp/closeDay.jsp").forward(request,response);
         } else {
             request.getRequestDispatcher("WEB-INF/jsp/adminLogin.jsp").forward(request,response);
         }

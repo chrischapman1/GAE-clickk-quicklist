@@ -32,4 +32,9 @@ public class CloseDay extends HttpServlet{
             request.getRequestDispatcher("WEB-INF/jsp/adminLogin.jsp").forward(request,response);
         }
     }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("WEB-INF/jsp/closeDay.jsp").forward(req,resp);
+    }
 }
